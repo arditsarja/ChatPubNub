@@ -11,12 +11,12 @@
     tools:context=".LoginActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_above="@+id/usernameEdit"
         android:text="Log In"
-        android:id="@+id/textView"
-        android:layout_above="@+id/usernameEdit"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
     <EditText
@@ -28,11 +28,17 @@
         <requestFocus />
     </EditText>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword" />
+
     <Button
+        android:id="@+id/goBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go!"
-        android:id="@+id/goBtn"
-        android:onClick="joinChat"/>
+        android:onClick="joinChat"
+        android:text="Go!" />
 
 </LinearLayout>

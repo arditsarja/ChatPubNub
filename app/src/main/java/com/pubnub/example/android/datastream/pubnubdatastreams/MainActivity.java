@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ScheduledExecutorService mScheduleTaskExecutor;
     private List<String> theChannel = new ArrayList<>();
+    private List<String> subscribeChannels = new ArrayList<>();
     private PubNub mPubnub_DataStream;
     private PubSubListAdapter mPubSub;
     private PubSubPnCallback mPubSubPnCallback;
@@ -64,22 +65,22 @@ public class MainActivity extends AppCompatActivity {
     private MultiListAdapter mMulti;
     private MultiPnCallback mMultiPnCallback;
 
-    private SharedPreferences mSharedPrefs;
+    private static SharedPreferences mSharedPrefs;
     private String mUsername;
     private Random random = new Random();
-    private String channel;
+    public static boolean clean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
-        if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
-            return;
+        if(mSharedPrefs==null) {
+            mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
+            if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
+                Intent toLogin = new Intent(this, LoginActivity.class);
+                startActivity(toLogin);
+                return;
+            }
         }
-
         this.mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
         this.mPubSub = new PubSubListAdapter(this);
         this.mPresence = new PresenceListAdapter(this);
@@ -123,7 +124,11 @@ public class MainActivity extends AppCompatActivity {
         });
         initChanelList();
         initPubNub();
+        clean=true;
 
+    }
+    public void changeChannel(View v){
+        initChanelList();
     }
 
     private void initChanelList() {
@@ -149,21 +154,43 @@ public class MainActivity extends AppCompatActivity {
                 String strName = arrayAdapter.getItem(which);
                 theChannel.clear();
                 theChannel.add(strName);
-                AlertDialog.Builder builderInner = new AlertDialog.Builder(MainActivity.this);
-                builderInner.setMessage(strName);
-                builderInner.setTitle("Your Selected Item is");
-                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                if(!subscribeChannels.contains(strName))
+                    subscribeChannels.add(strName);
+
+                boolean exist = false;
+                for (String courrentChannel: subscribeChannels) {
+                    if(courrentChannel.equals(strName)) {
+                        exist = true;
+                        break;
                     }
-                });
-                builderInner.show();
-                initChannels();
+                }
+                if(!exist)
+                    subscribeChannels.add(strName);
+//                AlertDialog.Builder builderInner = new AlertDialog.Builder(MainActivity.this);
+//                builderInner.setMessage(strName);
+//                builderInner.setTitle("Your Selected Item is");
+//                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                builderInner.show();
+
+                initChannels(MainActivity.clean);
                 mUsername = mUsername + strName;
             }
         });
         builderSingle.show();
+    }
+
+    public void conversaton(View view){
+        Intent intent = new Intent(this,Conversation_Activity.class);
+//        Intent intent = new Intent(this,Main2Activity.class);
+
+
+//        intent.putExtras(mSharedPrefs,"mSharedPrefs");
+        startActivity(intent);
     }
 
     @Override
@@ -242,11 +269,12 @@ public class MainActivity extends AppCompatActivity {
         this.mPubnub_Multi = new PubNub(config);
     }
 
-    private final void initChannels() {
+    private final void initChannels(boolean clean) {
+
         this.mPubnub_DataStream.addListener(this.mPubSubPnCallback);
         this.mPubnub_DataStream.addListener(this.mPresencePnCallback);
 
-        this.mPubnub_DataStream.subscribe().channels(theChannel).withPresence().execute();
+        this.mPubnub_DataStream.subscribe().channels(subscribeChannels).withPresence().execute();
         this.mPubnub_DataStream.hereNow().channels(theChannel).async(new PNCallback<PNHereNowResult>() {
             @Override
             public void onResponse(PNHereNowResult result, PNStatus status) {
