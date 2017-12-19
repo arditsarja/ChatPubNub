@@ -75,16 +75,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        this.mUsername = getIntent().getStringExtra("username");
+        this.mUsername = MainActivity1.mUsername;
         this.mPubSub = new PubSubListAdapter(this);
+        MainActivity1.mPubSub=mPubSub;
         this.mPresence = new PresenceListAdapter(this);
+        MainActivity1.mPresence=mPresence;
         this.mMulti = new MultiListAdapter(this);
-
+        MainActivity1.mMulti=mMulti;
         this.mPubSubPnCallback = new PubSubPnCallback(this.mPubSub);
-
+        MainActivity1.mPubSubPnCallback=mPubSubPnCallback;
         this.mPresencePnCallback = new PresencePnCallback(this.mPresence);
+        MainActivity1.mPresencePnCallback=mPresencePnCallback;
         this.mMultiPnCallback = new MultiPnCallback(this.mMulti);
-
+        MainActivity1.mMultiPnCallback=mMultiPnCallback;
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
