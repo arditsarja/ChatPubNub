@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         this.mMulti = new MultiListAdapter(this);
 
         this.mPubSubPnCallback = new PubSubPnCallback(this.mPubSub);
+
         this.mPresencePnCallback = new PresencePnCallback(this.mPresence);
         this.mMultiPnCallback = new MultiPnCallback(this.mMulti);
 
