@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private MultiListAdapter mMulti;
     private MultiPnCallback mMultiPnCallback;
 
-    private SharedPreferences mSharedPrefs;
+
     private String mUsername;
     private Random random = new Random();
     private String channel;
@@ -73,14 +73,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
-        if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
-            return;
-        }
 
-        this.mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
+
+        this.mUsername = getIntent().getStringExtra("username");
         this.mPubSub = new PubSubListAdapter(this);
         this.mPresence = new PresenceListAdapter(this);
         this.mMulti = new MultiListAdapter(this);
