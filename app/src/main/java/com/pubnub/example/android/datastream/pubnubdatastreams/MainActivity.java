@@ -74,20 +74,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         this.mUsername = MainActivity1.mUsername;
         this.mPubSub = new PubSubListAdapter(this);
-        MainActivity1.mPubSub=mPubSub;
+        MainActivity1.mPubSub = mPubSub;
         this.mPresence = new PresenceListAdapter(this);
-        MainActivity1.mPresence=mPresence;
+        MainActivity1.mPresence = mPresence;
         this.mMulti = new MultiListAdapter(this);
-        MainActivity1.mMulti=mMulti;
+        MainActivity1.mMulti = mMulti;
         this.mPubSubPnCallback = new PubSubPnCallback(this.mPubSub);
-        MainActivity1.mPubSubPnCallback=mPubSubPnCallback;
+        MainActivity1.mPubSubPnCallback = mPubSubPnCallback;
         this.mPresencePnCallback = new PresencePnCallback(this.mPresence);
-        MainActivity1.mPresencePnCallback=mPresencePnCallback;
+        MainActivity1.mPresencePnCallback = mPresencePnCallback;
         this.mMultiPnCallback = new MultiPnCallback(this.mMulti);
-        MainActivity1.mMultiPnCallback=mMultiPnCallback;
+        MainActivity1.mMultiPnCallback = mMultiPnCallback;
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -166,42 +165,6 @@ public class MainActivity extends AppCompatActivity {
         builderSingle.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_logout:
-                logout();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void logout() {
-        disconnectAndCleanup();
-
-        Intent toLogin = new Intent(this, LoginActivity.class);
-        startActivity(toLogin);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disconnectAndCleanup();
-    }
 
     public void publish(View view) {
         final EditText mMessage = (EditText) MainActivity.this.findViewById(R.id.new_message);
@@ -308,27 +271,5 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 15, TimeUnit.SECONDS);
     }
 
-    private void disconnectAndCleanup() {
-        getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE).edit().clear().commit();
 
-        if (this.mPubnub_DataStream != null) {
-            this.mPubnub_DataStream.unsubscribe().channels(PUBSUB_CHANNEL).execute();
-            this.mPubnub_DataStream.removeListener(this.mPubSubPnCallback);
-            this.mPubnub_DataStream.removeListener(this.mPresencePnCallback);
-            this.mPubnub_DataStream.stop();
-            this.mPubnub_DataStream = null;
-        }
-
-        if (this.mPubnub_Multi != null) {
-            this.mPubnub_Multi.unsubscribe().channels(MULTI_CHANNELS).execute();
-            this.mPubnub_Multi.removeListener(this.mMultiPnCallback);
-            this.mPubnub_Multi.stop();
-            this.mPubnub_Multi = null;
-        }
-
-        if (this.mScheduleTaskExecutor != null) {
-            this.mScheduleTaskExecutor.shutdownNow();
-            this.mScheduleTaskExecutor = null;
-        }
-    }
 }
