@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText mUsername;
@@ -14,7 +17,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+//        ImageView imageView = findViewById(R.id.imageLogo);
+//        Picasso.with(getBaseContext()).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         mUsername = (EditText) findViewById(R.id.usernameEdit);
     }
 
@@ -30,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         edit.putString(Constants.DATASTREAM_UUID, username);
         edit.apply();
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity1.class);
         startActivity(intent);
     }
 

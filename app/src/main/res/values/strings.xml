@@ -13,10 +13,11 @@
     <string name="Beautiful_Picture">Beautiful Picture</string>
     <string name="Uploading">Uploading</string>
     <string name="Loading_Complete">Loading Complete, button is disabled</string>
-    <string name="username">Username</string>
+    <string name="username">Nome utente</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login">Accedi</string>
     <string name="loginPanel">Login Panel</string>
+    <string name="logo">Company Logo</string>
 
     <array name="sample_list">
         <item>Action Button Progress sample</item>
