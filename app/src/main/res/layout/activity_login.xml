@@ -1,75 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passwordEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@color/holo_blue_bright"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="285dp"
+        android:layout_height="36dp"
         android:layout_above="@+id/usernameEdit"
-        android:text="Log In"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="@string/loginPanel"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="117dp" />
 
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/usernameEdit"
+        android:layout_width="297dp"
+        android:layout_height="43dp"
+        android:hint="@string/username"
         android:textSize="16sp"
-        android:hint="username">
-        <requestFocus />
-    </EditText>
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="58dp"/>
+
 
     <EditText
-        android:layout_width="match_parent"
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="189dp" />
 
     <Button
         android:id="@+id/goBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="164dp"
+        android:layout_height="52dp"
         android:onClick="joinChat"
-        android:text="Go!" />
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:inputType="textEmailAddress"
-        android:text="@string/dummy_email" />
+        android:text="@string/login"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="327dp" />
 
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:inputType="textPassword"
-        android:text="@string/dummy_password" />
 
     <!--<com.dd.processbutton.iml.ActionProcessButton-->
-        <!--android:id="@+id/btnSignIn"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:text="@string/Sign_in"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:textSize="18sp"-->
-        <!--custom:pb_colorComplete="@color/green_complete"-->
-        <!--custom:pb_colorNormal="@color/blue_normal"-->
-        <!--custom:pb_colorPressed="@color/blue_pressed"-->
-        <!--custom:pb_colorProgress="@color/purple_progress"-->
-        <!--custom:pb_textComplete="@string/Success"-->
-        <!--custom:pb_textProgress="@string/Loading" />-->
-
-</LinearLayout>
+    <!--android:id="@+id/btnSignIn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:text="@string/Sign_in"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="18sp"-->
+    <!--custom:pb_colorComplete="@color/green_complete"-->
+    <!--custom:pb_colorNormal="@color/blue_normal"-->
+    <!--custom:pb_colorPressed="@color/blue_pressed"-->
+    <!--custom:pb_colorProgress="@color/purple_progress"-->
+    <!--custom:pb_textComplete="@string/Success"-->
+    <!--custom:pb_textProgress="@string/Loading" />-->
+</android.support.constraint.ConstraintLayout>
