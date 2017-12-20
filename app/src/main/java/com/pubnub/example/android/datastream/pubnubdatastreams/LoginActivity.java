@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     public void joinChat(View view) {
         String username = mUsername.getText().toString();
 
-        if (!isValid(username)) {
+         if (!isValid(username)) {
             return;
         }
 

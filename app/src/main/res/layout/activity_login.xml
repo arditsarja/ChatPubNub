@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,8 +46,6 @@
             custom:srcCompat="@drawable/logo" />
 
 
-
-
         <EditText
             android:id="@+id/usernameEdit"
             android:layout_width="235dp"
@@ -59,6 +58,7 @@
             custom:layout_constraintHorizontal_bias="0.5"
             custom:layout_constraintStart_toStartOf="parent"
             custom:layout_constraintTop_toBottomOf="@+id/imageLogo" />
+
         <EditText
             android:id="@+id/passwordEdit"
             android:layout_width="235dp"
@@ -68,7 +68,6 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10sp"
-
             custom:layout_constraintBottom_toTopOf="@+id/goBtn"
             custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintHorizontal_bias="0.507"

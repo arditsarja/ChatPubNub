@@ -26,7 +26,8 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
     @Override
     public void add(PubSubPojo message) {
-        this.values.add(0, message);
+//        this.values.add(0, message);
+        this.values.add( message);
 
         ((Activity) this.context).runOnUiThread(new Runnable() {
             @Override
