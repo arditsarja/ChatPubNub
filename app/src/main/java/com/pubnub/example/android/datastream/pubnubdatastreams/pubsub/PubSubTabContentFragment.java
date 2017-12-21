@@ -37,8 +37,6 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_pubsub);
 
-
-//        return view;
         psAdapter = PostVariables.mPubSub;
         mUsername = PostVariables.mUsername;
         mPubnub_DataStream = PostVariables.mPubnub_DataStream;

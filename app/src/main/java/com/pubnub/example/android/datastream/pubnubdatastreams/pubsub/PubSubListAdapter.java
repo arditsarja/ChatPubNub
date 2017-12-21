@@ -47,25 +47,28 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         PubSubPojo dsMsg = this.values.get(position);
         PubSubListRowUi msgView;
-
-        if (convertView == null) {
-            msgView = new PubSubListRowUi();
-
+        if (dsMsg.getSender().equals(MainActivity1.mUsername))
+            convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
+        else
             convertView = inflater.inflate(R.layout.list_row_pubsub, parent, false);
 
+
+//        if (convertView == null) {
+            msgView = new PubSubListRowUi();
             msgView.sender = (TextView) convertView.findViewById(R.id.sender);
             msgView.message = (BubbleTextView) convertView.findViewById(R.id.message);
             msgView.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
 
             convertView.setTag(msgView);
-        } else {
-            msgView = (PubSubListRowUi) convertView.getTag();
-        }
+//        } else {
+//            msgView = (PubSubListRowUi) convertView.getTag();
+//        }
 
         msgView.sender.setText(dsMsg.getSender());
         msgView.message.setText(dsMsg.getMessage());
         msgView.timestamp.setText(dsMsg.getTimestamp());
         if (dsMsg.getSender().equals(MainActivity1.mUsername)) {
+
 //            msgView.sender.setTextAppearance(R.style.boldText);
 //            msgView.message.setTextAppearance(R.style.boldText);
 //            msgView.message.setTextAppearance(R.style.boldText);
