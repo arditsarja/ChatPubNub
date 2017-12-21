@@ -18,6 +18,7 @@
             android:id="@+id/timestamp"
             android:text="20160601T110000.000Z"
             android:textSize="10sp"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:gravity="end"
