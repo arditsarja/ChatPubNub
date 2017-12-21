@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.github.library.bubbleview.BubbleTextView;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity1;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
@@ -53,7 +54,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             convertView = inflater.inflate(R.layout.list_row_pubsub, parent, false);
 
             msgView.sender = (TextView) convertView.findViewById(R.id.sender);
-            msgView.message = (TextView) convertView.findViewById(R.id.message);
+            msgView.message = (BubbleTextView) convertView.findViewById(R.id.message);
             msgView.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
 
             convertView.setTag(msgView);
@@ -65,9 +66,9 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         msgView.message.setText(dsMsg.getMessage());
         msgView.timestamp.setText(dsMsg.getTimestamp());
         if (dsMsg.getSender().equals(MainActivity1.mUsername)) {
-            msgView.sender.setTextAppearance(R.style.boldText);
-            msgView.message.setTextAppearance(R.style.boldText);
-            msgView.message.setTextAppearance(R.style.boldText);
+//            msgView.sender.setTextAppearance(R.style.boldText);
+//            msgView.message.setTextAppearance(R.style.boldText);
+//            msgView.message.setTextAppearance(R.style.boldText);
         }
 
         return convertView;
