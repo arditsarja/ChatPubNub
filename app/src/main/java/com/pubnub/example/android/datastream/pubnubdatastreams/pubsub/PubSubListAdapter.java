@@ -2,12 +2,14 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity1;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 
 import java.util.ArrayList;
@@ -55,6 +57,8 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         } else {
             msgView = (PubSubListRowUi) convertView.getTag();
         }
+
+
 
         msgView.sender.setText(dsMsg.getSender());
         msgView.message.setText(dsMsg.getMessage());
