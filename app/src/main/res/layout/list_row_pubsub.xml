@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,7 +35,10 @@
         android:layout_height="wrap_content"
         android:paddingBottom="6dp"
         android:paddingTop="2dp"
+        android:layout_marginRight="@dimen/tile_letter_font_size"
         android:text="this is a sample real-time message from the data stream network"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:textSize="12sp"
         app:arrowWidth="8dp"
         app:angle="8dp"
