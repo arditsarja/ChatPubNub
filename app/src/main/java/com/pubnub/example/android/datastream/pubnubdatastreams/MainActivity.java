@@ -30,11 +30,14 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.multi.MultiPnCall
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresenceListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresencePnCallback;
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresencePojo;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PostVariables;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubPnCallback;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubTabContentFragment;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,11 +51,11 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private static final List<String> MULTI_CHANNELS = Arrays.asList(Constants.MULTI_CHANNEL_NAMES.split(","));
-    //    public static final List<String> PUBSUB_CHANNEL = Arrays.asList(Constants.CHANNEL_NAME);
     public static final List<String> PUBSUB_CHANNEL = Arrays.asList(Constants.CHANNEL_NAME.split(","));
 
     private ScheduledExecutorService mScheduleTaskExecutor;
     private List<String> theChannel = new ArrayList<>();
+
     private PubNub mPubnub_DataStream;
     private PubSubListAdapter mPubSub;
     private PubSubPnCallback mPubSubPnCallback;
@@ -68,61 +71,50 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername;
     private Random random = new Random();
     private String channel;
+    private SharedPreferences mSharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+
+        mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
+        if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
+            Intent toLogin = new Intent(this, LoginActivity.class);
+            startActivity(toLogin);
+            return;
+        }
+
+        this.mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
         this.mUsername = MainActivity1.mUsername;
         this.mPubSub = new PubSubListAdapter(this);
-        MainActivity1.mPubSub = mPubSub;
         this.mPresence = new PresenceListAdapter(this);
-        MainActivity1.mPresence = mPresence;
         this.mMulti = new MultiListAdapter(this);
-        MainActivity1.mMulti = mMulti;
+
         this.mPubSubPnCallback = new PubSubPnCallback(this.mPubSub);
-        MainActivity1.mPubSubPnCallback = mPubSubPnCallback;
         this.mPresencePnCallback = new PresencePnCallback(this.mPresence);
-        MainActivity1.mPresencePnCallback = mPresencePnCallback;
         this.mMultiPnCallback = new MultiPnCallback(this.mMulti);
-        MainActivity1.mMultiPnCallback = mMultiPnCallback;
+
+
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Pub/Sub"));
-
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final MainActivityTabManager adapter = new MainActivityTabManager
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-
-        adapter.setPubSubAdapter(this.mPubSub);
-
-
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
 //        initChanelList();
         theChannel.clear();
         theChannel.add(PUBSUB_CHANNEL.get(0));
         initPubNub();
         initChannels();
 
+    }
+
+    public void openChat(View view) {
+        Intent intent = new Intent(this,PubSubTabContentFragment.class);
+        PostVariables.mPubSub = this.mPubSub;
+        PostVariables.mUsername = this.mUsername;
+        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
+        PostVariables.channel = this.theChannel.get(0);
+
+        startActivity(intent);
     }
 
     private void initChanelList() {

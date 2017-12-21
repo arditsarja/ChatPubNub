@@ -19,7 +19,8 @@ public class MainActivityTabManager extends FragmentStatePagerAdapter {
     private final PresenceTabContentFragment presence = new PresenceTabContentFragment();
     private final MultiTabContentFragment multi = new MultiTabContentFragment();
 
-    private List<Fragment> items = ImmutableList.of(pubsub, presence, multi);
+    private List<Fragment> items = ImmutableList.of( presence, multi);
+//    private List<Fragment> items = ImmutableList.of(pubsub, presence, multi);
 
     public MainActivityTabManager(FragmentManager fm, int NumOfTabs) {
         super(fm);
