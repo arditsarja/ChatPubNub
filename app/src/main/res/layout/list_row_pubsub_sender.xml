@@ -44,13 +44,15 @@
             android:paddingTop="2dp"
             android:text="is is a sample real-time message from the data stream netw"
             android:textAppearance="@style/mesageStyle"
+            android:textSize="26sp"
+            android:textColor="@color/white"
             app:angle="8dp"
             app:arrowCenter="true"
             app:arrowHeight="5dp"
             app:arrowLocation="right"
             app:arrowPosition="3dp"
             app:arrowWidth="8dp"
-            app:bubbleColor="#7e1010"
+            app:bubbleColor="#50dc3a"
 
             />
     </RelativeLayout>

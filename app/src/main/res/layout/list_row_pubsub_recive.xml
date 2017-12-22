@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Remote Device UUID"
             android:textSize="10sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/timestamp"
-            android:text="20160601T110000.000Z"
-            android:textSize="10sp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:gravity="end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
+            android:text="20160601T110000.000Z"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
@@ -33,29 +35,29 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:paddingBottom="6dp"
         android:paddingTop="2dp"
-        android:layout_marginRight="@dimen/tile_letter_font_size"
         android:text="this is a sample real-time message from the data stream network"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="12sp"
-        app:arrowWidth="8dp"
+        android:textColor="@color/white"
+        android:textSize="26sp"
         app:angle="8dp"
-        app:arrowHeight="10dp"
-        app:arrowPosition="14dp"
-        app:arrowLocation="left"
-        app:bubbleColor="#696969"
         app:arrowCenter="true"
+        app:arrowHeight="10dp"
+        app:arrowLocation="left"
+        app:arrowPosition="14dp"
+        app:arrowWidth="8dp"
+        app:bubbleColor="#4ba5e1"
 
 
         />
-        <!--android:text="this is a sample real-time message from the data stream network"-->
-        <!--android:textSize="12sp"-->
-        <!--android:paddingTop="2dp"-->
-        <!--android:paddingBottom="6dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
+    <!--android:text="this is a sample real-time message from the data stream network"-->
+    <!--android:textSize="12sp"-->
+    <!--android:paddingTop="2dp"-->
+    <!--android:paddingBottom="6dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
 
 
 </LinearLayout>

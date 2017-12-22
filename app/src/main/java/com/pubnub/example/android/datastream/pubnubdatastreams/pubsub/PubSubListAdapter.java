@@ -24,7 +24,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
     private final List<PubSubPojo> values = new ArrayList<PubSubPojo>();
 
     public PubSubListAdapter(Context context) {
-        super(context, R.layout.list_row_pubsub);
+        super(context, R.layout.list_row_pubsub_recive);
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
@@ -50,7 +50,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         if (dsMsg.getSender().equals(MainActivity1.mUsername))
             convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
         else
-            convertView = inflater.inflate(R.layout.list_row_pubsub, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
 
 
 //        if (convertView == null) {
