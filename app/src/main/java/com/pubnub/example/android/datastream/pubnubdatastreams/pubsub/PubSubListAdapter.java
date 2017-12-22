@@ -56,7 +56,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 //        if (convertView == null) {
             msgView = new PubSubListRowUi();
             msgView.sender = (TextView) convertView.findViewById(R.id.sender);
-            msgView.message = (BubbleTextView) convertView.findViewById(R.id.message);
+            msgView.message = (TextView) convertView.findViewById(R.id.message);
             msgView.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
 
             convertView.setTag(msgView);

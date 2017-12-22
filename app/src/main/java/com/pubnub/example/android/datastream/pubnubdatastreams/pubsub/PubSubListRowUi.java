@@ -6,6 +6,6 @@ import com.github.library.bubbleview.BubbleTextView;
 
 public class PubSubListRowUi {
     public TextView sender;
-    public BubbleTextView message;
+    public TextView message;
     public TextView timestamp;
 }

@@ -20,20 +20,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/text_view"
-            android:text="fdgfsdgdsf"
-            android:textColor="@color/white"
+            android:text="@string/text_bubble"
             android:textSize="26sp"
-
             />
-
-        <TextView
-            android:id="@+id/sender"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_view"
-            android:text="Remote Device UUID"
-            android:textSize="10sp"
-            android:textStyle="bold" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout2"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:id="@+id/sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/text_view"
+                android:text="Remote Device UUID"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </LinearLayout>
     <!--</com.github.library.bubbleview.BubbleLinearLayout>-->
 
@@ -84,37 +96,37 @@
 
     <!--/>-->
 
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
+    <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
 
-    <!--<TextView-->
-    <!--android:id="@+id/sender"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Remote Device UUID"-->
-    <!--android:textSize="10sp"-->
-    <!--android:textStyle="bold" />-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/sender"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Remote Device UUID"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textStyle="bold" />&ndash;&gt;-->
 
-    <!--<TextView-->
-    <!--android:id="@+id/timestamp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:gravity="end"-->
-    <!--android:text="20160601T110000.000Z"-->
-    <!--android:textSize="10sp" />-->
-    <!--</RelativeLayout>-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/timestamp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_alignParentEnd="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:gravity="end"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="20160601T110000.000Z"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="10sp" />&ndash;&gt;-->
+    <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
 
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="right"-->
-    <!--&gt;-->
+    <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
+    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
 
-    <!--</RelativeLayout>-->
+    <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
 
 
 </RelativeLayout>
