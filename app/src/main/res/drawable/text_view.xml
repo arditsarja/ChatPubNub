@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <padding
+        android:bottom="5sp"
+        android:left="20sp"
+        android:right="20sp"
+        android:top="5sp" />
+    <stroke android:width="0dp" />
+</shape>

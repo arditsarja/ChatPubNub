@@ -4,21 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <!--app:bubbleColor="@color/white"-->
+    <com.github.library.bubbleview.BubbleLinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        app:angle="8dp"
+        app:arrowCenter="true"
+        app:arrowHeight="10dp"
+        app:arrowLocation="left"
+        app:arrowPosition="14dp"
+        app:arrowWidth="8dp"
+        app:bubbleColor="@color/green_complete"
+        >
 
         <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="this is a sample real-time message from the data stream network"
+            android:background="@drawable/text_view"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+
+            />
+
+        <TextView
+            android:background="@drawable/text_view"
             android:id="@+id/sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remote Device UUID"
             android:textSize="10sp"
             android:textStyle="bold" />
+    </com.github.library.bubbleview.BubbleLinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp">
+
 
         <TextView
+            android:background="@drawable/text_view"
             android:id="@+id/timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,28 +64,6 @@
 
     </RelativeLayout>
 
-    <com.github.library.bubbleview.BubbleTextView
-
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="6dp"
-        android:paddingTop="2dp"
-        android:text="this is a sample real-time message from the data stream network"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        app:angle="8dp"
-        app:arrowCenter="true"
-        app:arrowHeight="10dp"
-        app:arrowLocation="left"
-        app:arrowPosition="14dp"
-        app:arrowWidth="8dp"
-        app:bubbleColor="#4ba5e1"
-
-
-        />
     <!--android:text="this is a sample real-time message from the data stream network"-->
     <!--android:textSize="12sp"-->
     <!--android:paddingTop="2dp"-->

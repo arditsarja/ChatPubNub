@@ -5,6 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.github.library.bubbleview.BubbleTextView
+
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="is is a sample real-time message from the data stream netw"
+        android:textAppearance="@style/messageStyle"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        app:angle="8dp"
+        app:arrowCenter="true"
+        app:arrowHeight="5dp"
+        app:arrowLocation="right"
+        app:arrowPosition="3dp"
+        app:arrowWidth="8dp"
+        app:bubbleColor="#50dc3a"
+
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,26 +56,6 @@
         android:gravity="right"
        >
 
-        <com.github.library.bubbleview.BubbleTextView
-
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="6dp"
-            android:paddingTop="2dp"
-            android:text="is is a sample real-time message from the data stream netw"
-            android:textAppearance="@style/mesageStyle"
-            android:textSize="26sp"
-            android:textColor="@color/white"
-            app:angle="8dp"
-            app:arrowCenter="true"
-            app:arrowHeight="5dp"
-            app:arrowLocation="right"
-            app:arrowPosition="3dp"
-            app:arrowWidth="8dp"
-            app:bubbleColor="#50dc3a"
-
-            />
     </RelativeLayout>
 
 
