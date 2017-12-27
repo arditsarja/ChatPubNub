@@ -19,7 +19,8 @@
     <string name="loginPanel">Login Panel</string>
     <string name="logo">Company Logo</string>
     <string name="text_bubble">this is a sample real-time message from the data stream network</string>
-
+    <string name="type_your_message">Type a message</string>
+    <string name="NoRecent">No recent</string>
     <array name="sample_list">
         <item>Action Button Progress sample</item>
         <item>Action Button Endless Progress sample</item>

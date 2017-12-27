@@ -56,9 +56,9 @@
         <activity
             android:name=".pubsub.PubSubTabContentFragment"
             android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|smallestScreenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
