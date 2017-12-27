@@ -47,11 +47,13 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         PubSubPojo dsMsg = this.values.get(position);
         PubSubListRowUi msgView;
+        String newLine="";
         if (dsMsg.getSender().equals(MainActivity1.mUsername))
             convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
-        else
+        else {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
-
+            newLine="\n";
+        }
 
 //        if (convertView == null) {
             msgView = new PubSubListRowUi();
@@ -65,7 +67,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 //        }
 
         msgView.sender.setText(dsMsg.getSender());
-        msgView.message.setText(dsMsg.getMessage());
+        msgView.message.setText(newLine+dsMsg.getMessage()+"\n");
         msgView.timestamp.setText(dsMsg.getTimestamp());
         if (dsMsg.getSender().equals(MainActivity1.mUsername)) {
 

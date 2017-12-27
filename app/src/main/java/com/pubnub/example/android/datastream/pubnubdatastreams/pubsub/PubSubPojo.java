@@ -3,16 +3,19 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 
 public class PubSubPojo {
     private final String sender;
     private final String message;
     private final String timestamp;
-
+    private final String timestampOriginal;
+    private DateTimeUtil dateTimeUtil;
     public PubSubPojo(@JsonProperty("sender") String sender, @JsonProperty("message") String message, @JsonProperty("timestamp") String timestamp) {
         this.sender = sender;
         this.message = message;
         this.timestamp = timestamp;
+        this.timestampOriginal = timestamp;
     }
 
     public String getSender() {
@@ -24,7 +27,7 @@ public class PubSubPojo {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp.substring(11,16);
     }
 
     @Override

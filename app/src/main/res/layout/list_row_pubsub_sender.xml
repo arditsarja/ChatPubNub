@@ -1,96 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/layoutContainer" android:orientation="horizontal">
-    <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25">
-    </RelativeLayout>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="0dip"
+    <FrameLayout
+        android:id="@+id/outgoing_layout_bubble"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.75">
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/balloon_outgoing_normal">
 
-        <!-- This is the part that's 70% of the total width. I'm inserting a LinearLayout and buttons.-->
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|right"
+            android:paddingRight="5dp">
+            <TextView
+                android:id="@+id/sender"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/timestamp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/balloon_outgoing_normal"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="11:15 PM"
+                style="@style/chat_timings"/>
 
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/text_view"
-                    android:text="@string/text_bubble"
-                    android:textSize="26sp" />
-
-
-                <TextView
-                    android:id="@+id/sender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="18dp"
-                    android:background="@drawable/text_view"
-                    android:text="Remote Device UUID"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            </RelativeLayout>
-            <!--</com.github.library.bubbleview.BubbleLinearLayout>-->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:orientation="horizontal"
-                android:paddingBottom="6dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:paddingTop="2dp">
-
-
-                <TextView
-                    android:id="@+id/timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/text_view"
-                    android:gravity="end"
-                    android:text="20160601T110000.000Z"
-                    android:textSize="10sp" />
-
-            </RelativeLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/user_reply_status"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:paddingBottom="3dp"-->
+                <!--android:src="@drawable/message_got_receipt_from_server"/>-->
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/message"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingRight="6dp"
+            android:autoLink="web"
+            android:text="Rahul Agrawal is a good boy but he does not know what he wants."
+            style="@style/chat_text_message_style"/>
 
-</LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent" android:layout_height="match_parent"-->
+    <!--android:id="@+id/layoutContainer" android:orientation="horizontal">-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="0dip"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.25">-->
+    <!--</RelativeLayout>-->
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="0dip"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.75">-->
+
+        <!--&lt;!&ndash; This is the part that's 70% of the total width. I'm inserting a LinearLayout and buttons.&ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:orientation="vertical">-->
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:orientation="horizontal">-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/linearLayout2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:background="@drawable/balloon_outgoing_normal"-->
+
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/message"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:background="@drawable/text_view"-->
+                    <!--android:text="@string/text_bubble"-->
+                    <!--android:textSize="26sp" />-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sender"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginEnd="18dp"-->
+                    <!--android:background="@drawable/text_view"-->
+                    <!--android:text="Remote Device UUID"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:textStyle="bold" />-->
+            <!--</LinearLayout>-->
+
+            <!--</RelativeLayout>-->
+            <!--&lt;!&ndash;</com.github.library.bubbleview.BubbleLinearLayout>&ndash;&gt;-->
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingBottom="6dp"-->
+                <!--android:paddingLeft="2dp"-->
+                <!--android:paddingRight="2dp"-->
+                <!--android:paddingTop="2dp">-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/timestamp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:background="@drawable/text_view"-->
+                    <!--android:gravity="end"-->
+                    <!--android:text="20160601T110000.000Z"-->
+                    <!--android:textSize="10sp" />-->
+
+            <!--</RelativeLayout>-->
+
+        <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
+
+<!--</LinearLayout>-->
     <!--<com.github.library.bubbleview.BubbleTextView-->
 
     <!--android:id="@+id/message"-->

@@ -68,7 +68,7 @@ public class MultiListAdapter extends ArrayAdapter<MultiPojo> {
         }
 
         msgView.channel.setText(multiMsg.getChannel());
-        msgView.sender.setText(multiMsg.getSender());
+        msgView.sender.setText("\n\n"+multiMsg.getSender());
         msgView.message.setText(multiMsg.getMessage());
         msgView.timestamp.setText(multiMsg.getTimestamp());
 

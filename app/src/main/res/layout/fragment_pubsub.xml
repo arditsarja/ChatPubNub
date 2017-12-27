@@ -48,13 +48,21 @@
             android:paddingRight="20dp"
             android:background="@drawable/input">
 
+
             <ImageView
-                android:id="@+id/emojiButton"
+                android:id="@+id/atachFile"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="bottom"
-                android:src="@drawable/input_emoji"/>
-
+                android:padding="2dp"
+                android:src="@drawable/attach_file"/>
+            <ImageView
+                android:id="@+id/insertPhoto"
+                android:padding="2dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/insert_photo"/>
             <EditText
                 android:id="@+id/new_message"
                 android:layout_width="match_parent"
@@ -67,6 +75,8 @@
                 android:textSize="18sp"
                 android:textColorHint="#c4c0bd"
                 android:background="@null"/>
+
+
 
         </LinearLayout>
 
