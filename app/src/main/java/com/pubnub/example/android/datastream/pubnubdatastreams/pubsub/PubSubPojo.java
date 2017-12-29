@@ -7,11 +7,11 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil
 
 public class PubSubPojo {
     private final String sender;
-    private final String message;
+    private final Object message;
     private final String timestamp;
     private final String timestampOriginal;
     private DateTimeUtil dateTimeUtil;
-    public PubSubPojo(@JsonProperty("sender") String sender, @JsonProperty("message") String message, @JsonProperty("timestamp") String timestamp) {
+    public PubSubPojo(@JsonProperty("sender") String sender, @JsonProperty("message") Object message, @JsonProperty("timestamp") String timestamp) {
         this.sender = sender;
         this.message = message;
         this.timestamp = timestamp;
@@ -22,7 +22,7 @@ public class PubSubPojo {
         return sender;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
@@ -57,7 +57,7 @@ public class PubSubPojo {
     public String toString() {
         return MoreObjects.toStringHelper(PubSubPojo.class)
                 .add("sender", sender)
-                .add("message", message)
+                .add("message", message.toString())
                 .add("timestamp", timestamp)
                 .toString();
     }

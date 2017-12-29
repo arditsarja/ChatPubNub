@@ -37,7 +37,7 @@ dependencies {
     compile 'com.github.stfalcon:chatkit:0.2.2'
     compile 'com.github.hani-momanii:SuperNova-Emoji:1.0'
     compile 'com.github.lguipeng:BubbleView:1.0.1'
-
+    compile files('libs/PhotoUtil.jar')
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
