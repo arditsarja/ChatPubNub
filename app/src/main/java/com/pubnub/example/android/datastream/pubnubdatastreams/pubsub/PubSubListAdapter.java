@@ -3,9 +3,9 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.kosalgeek.android.photoutil.ImageLoader;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity1;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
-import com.pubnub.example.android.datastream.pubnubdatastreams.util.ImageSaver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,42 +56,22 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
             newLine = "\n";
         }
-
-//        if (convertView == null) {
         msgView = new PubSubListRowUi();
         msgView.sender = (TextView) convertView.findViewById(R.id.sender);
-//        if (dsMsg.getMessage() instanceof Bitmap && dsMsg.getSender().equals(MainActivity1.mUsername)) {
-            msgView.image = (ImageView) convertView.findViewById(R.id.imageView);
-
-            msgView.message = (TextView) convertView.findViewById(R.id.message);
-//        } else
-//            msgView.message = (TextView) convertView.findViewById(R.id.message);
+        msgView.image = (ImageView) convertView.findViewById(R.id.imageView);
+        msgView.message = (TextView) convertView.findViewById(R.id.message);
         msgView.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-
         convertView.setTag(msgView);
-//        } else {
-//            msgView = (PubSubListRowUi) convertView.getTag();
-//        }
-String theMessage = (String) dsMsg.getMessage();
+
+
         msgView.sender.setText(dsMsg.getSender());
-//        if (dsMsg.getMessage() instanceof Bitmap  && dsMsg.getSender().equals(MainActivity1.mUsername)) {
-//            msgView.image.setImageBitmap((Bitmap) dsMsg.getMessage());
-//            msgView.image.setVisibility(View.VISIBLE);
-//            msgView.message.setText("");
-        if (theMessage.contains("isphoto") && dsMsg.getSender().equals(MainActivity1.mUsername)) {
-//            msgView.image.setImageBitmap((Bitmap) dsMsg.getMessage());
-            theMessage=theMessage.replaceFirst("isphoto","");
+
+        if (dsMsg.getMessage() instanceof ArrayList && ((ArrayList) dsMsg.getMessage()).get(0).equals("isphoto") && dsMsg.getSender().equals(MainActivity1.mUsername)) {
+
             try {
-//                Bitmap myBitmap = BitmapFactory.decodeFile(theMessage);
-                Bitmap myBitmap = new ImageSaver(context).
-                        setFileName(theMessage).
-                        setDirectoryName("images").
-                        load();
-//                Bitmap myBitmap = ImageLoader.init().from(theMessage).requestSize(512, 512).getBitmap();
+                Bitmap myBitmap = ImageLoader.init().from((String) ((ArrayList) dsMsg.getMessage()).get(1)).requestSize(512, 512).getBitmap();
                 msgView.image.setImageBitmap(myBitmap);
-
-            }catch (Exception e){
-
+            } catch (Exception e) {
             }
             msgView.image.setVisibility(View.VISIBLE);
             msgView.message.setText("");
@@ -101,12 +80,7 @@ String theMessage = (String) dsMsg.getMessage();
             msgView.message.setVisibility(View.VISIBLE);
         }
         msgView.timestamp.setText(dsMsg.getTimestamp());
-        if (dsMsg.getSender().equals(MainActivity1.mUsername)) {
 
-//            msgView.sender.setTextAppearance(R.style.boldText);
-//            msgView.message.setTextAppearance(R.style.boldText);
-//            msgView.message.setTextAppearance(R.style.boldText);
-        }
 
         return convertView;
     }

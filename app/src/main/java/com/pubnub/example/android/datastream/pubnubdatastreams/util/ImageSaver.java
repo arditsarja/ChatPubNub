@@ -110,4 +110,18 @@ public class ImageSaver {
         }
         return null;
     }
+
+//    save image
+//     new ImageSaver(this).
+//          setFileName(imageFileName).
+//          setDirectoryName("images").
+//          save(bitmapImage);
+//          return "isphoto"+imageFileName;
+//
+
+//      load image
+//     Bitmap myBitmap = new ImageSaver(context).
+//           setFileName(theMessage).
+//           setDirectoryName("images").
+//           load();
 }

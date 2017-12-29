@@ -59,8 +59,7 @@
             android:autoLink="web"
             android:src="@drawable/logo"
             style="@style/chat_text_message_style"
-
-            />
+            android:visibility="gone"/>
 
     </FrameLayout>
 

@@ -8,13 +8,21 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CameraPhoto {
     private String photoPath;
     private Context context;
+    private File photoFile;
+
 
     public String getPhotoPath() {
         return this.photoPath;
@@ -27,7 +35,7 @@ public class CameraPhoto {
     public Intent takePhotoIntent() {
         Intent in = new Intent("android.media.action.IMAGE_CAPTURE");
         if (in.resolveActivity(this.context.getPackageManager()) != null) {
-            File photoFile = this.createImageFile();
+            photoFile = this.createImageFile();
             if (photoFile != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //use this if Lollipop_Mr1 (API 22) or above
                     in.putExtra("output", FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", photoFile));
@@ -63,5 +71,47 @@ public class CameraPhoto {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.context.sendBroadcast(mediaScanIntent);
+    }
+
+    public ArrayList<Byte> convertFileToByteArrayString() {
+        byte[] byteArray = null;
+        try {
+            InputStream inputStream = new FileInputStream(photoFile);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024 * 8];
+            int bytesRead = 0;
+
+            while ((bytesRead = inputStream.read(b)) != -1) {
+                bos.write(b, 0, bytesRead);
+            }
+
+            byteArray = bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return new String(byteArray, StandardCharsets.UTF_8);
+
+        return getList(byteArray);
+    }
+
+    private ArrayList<Byte> getList(byte[] byteArray) {
+        ArrayList<Byte> list = new ArrayList<>();
+        for (byte theByte:byteArray   ) {
+            list.add(theByte);
+        }
+        return list;
+    }
+
+    public ArrayList<Object> getData() {
+        ArrayList<Object> result = new ArrayList<Object>();
+        result.add("isphoto");
+        result.add(getPhotoPath());
+//        result.add(convertFileToByteArrayString());
+        return result;
+    }
+
+    public String getDataString() {
+        return "isphotosplitlist"+ getPhotoPath()+"splitlist"+convertFileToByteArrayString();
+//        return "isphotosplitlist" + getPhotoPath();
     }
 }
