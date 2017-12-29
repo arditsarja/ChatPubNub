@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
         theChannel.add(PUBSUB_CHANNEL.get(0));
         initPubNub();
         initChannels();
+        Intent intent = new Intent(this,PubSubTabContentFragment.class);
+        PostVariables.mPubSub = this.mPubSub;
+        PostVariables.mUsername = this.mUsername;
+        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
+        PostVariables.channel = this.theChannel.get(0);
+
+        startActivity(intent);
 
     }
 

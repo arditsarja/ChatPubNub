@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.common.collect.ImmutableMap;
 
+import com.kosalgeek.android.photoutil.ImageLoader;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
@@ -31,6 +32,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.ImageSaver;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -85,7 +87,14 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+        Bitmap bitmap = null;
+        try {
+            bitmap = ImageLoader.init().from(cameraPhoto.getPhotoPath()).requestSize(512, 512).getBitmap();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
 
 
@@ -136,21 +145,21 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     }
     public void openCamera(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        try {
+//            startActivityForResult(intent, 0);
+//
+//
+//        } catch (Exception e) {
+//            Log.v("Message", e.getMessage());
+//        }
         try {
-            startActivityForResult(intent, 0);
-
+            startActivityForResult(cameraPhoto.takePhotoIntent(), 0);
 
         } catch (Exception e) {
-            Log.v("Message", e.getMessage());
+            Log.v("Message error", e.getMessage());
         }
-//        try {
-//            startActivityForResult(cameraPhoto.takePhotoIntent(), 0);
-//            cameraPhoto.addToGallery();
-//        } catch (IOException e) {
-//            Toast.makeText(getApplicationContext(),
-//                    "Something Wrong while taking photos", Toast.LENGTH_SHORT).show();
-//        }
+        cameraPhoto.addToGallery();
     }
 
     public void publish(View view) {

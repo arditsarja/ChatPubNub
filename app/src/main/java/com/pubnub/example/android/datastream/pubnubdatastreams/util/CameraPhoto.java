@@ -4,9 +4,11 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
+
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,24 +24,35 @@ public class CameraPhoto {
         this.context = context;
     }
 
-    public Intent takePhotoIntent() throws IOException {
+    public Intent takePhotoIntent() {
         Intent in = new Intent("android.media.action.IMAGE_CAPTURE");
-        if(in.resolveActivity(this.context.getPackageManager()) != null) {
+        if (in.resolveActivity(this.context.getPackageManager()) != null) {
             File photoFile = this.createImageFile();
-            if(photoFile != null) {
-                in.putExtra("output", Uri.fromFile(photoFile));
+            if (photoFile != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //use this if Lollipop_Mr1 (API 22) or above
+                    in.putExtra("output", FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", photoFile));
+                } else {
+                    in.putExtra("output", Uri.fromFile(photoFile));
+                }
+//                    in.putExtra("output", Uri.fromFile(photoFile));
             }
         }
 
         return in;
     }
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() {
         String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss")).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //use this if Lollipop_Mr1 (API 22) or above
+            storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        } else {
+
+            storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        }
 //        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        File image = new File(storageDir,imageFileName+ ".jpg");
+        File image = new File(storageDir, imageFileName + ".jpg");
         this.photoPath = image.getAbsolutePath();
         return image;
     }

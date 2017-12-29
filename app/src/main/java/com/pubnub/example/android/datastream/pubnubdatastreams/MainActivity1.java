@@ -58,7 +58,9 @@ public class MainActivity1 extends AppCompatActivity {
             }
         }
         mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
-
+        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
     private void disconnectAndCleanup() {
