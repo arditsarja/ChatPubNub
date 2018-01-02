@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         edit.putString(Constants.DATASTREAM_UUID, username);
         edit.apply();
 
-        Intent intent = new Intent(this, MainActivity1.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

@@ -71,23 +71,20 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername;
     private Random random = new Random();
     private String channel;
-    private SharedPreferences mSharedPrefs;
+    public static SharedPreferences mSharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-        mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
-        if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
-            return;
+        if (mSharedPrefs == null) {
+            mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
+            if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
+                Intent toLogin = new Intent(this, LoginActivity.class);
+                startActivity(toLogin);
+                return;
+            }
         }
-
-        this.mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
-        this.mUsername = MainActivity1.mUsername;
+        mUsername = mSharedPrefs.getString(Constants.DATASTREAM_UUID, "");
         this.mPubSub = new PubSubListAdapter(this);
         this.mPresence = new PresenceListAdapter(this);
         this.mMulti = new MultiListAdapter(this);
@@ -263,5 +260,70 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 15, TimeUnit.SECONDS);
     }
 
+    private void disconnectAndCleanup() {
+        getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE).edit().clear().commit();
 
+        if (this.mPubnub_DataStream != null) {
+            this.mPubnub_DataStream.unsubscribe().channels(PUBSUB_CHANNEL).execute();
+            this.mPubnub_DataStream.removeListener(this.mPubSubPnCallback);
+            this.mPubnub_DataStream.removeListener(this.mPresencePnCallback);
+            this.mPubnub_DataStream.stop();
+            this.mPubnub_DataStream = null;
+        }
+
+        if (this.mPubnub_Multi != null) {
+            this.mPubnub_Multi.unsubscribe().channels(MULTI_CHANNELS).execute();
+            this.mPubnub_Multi.removeListener(this.mMultiPnCallback);
+            this.mPubnub_Multi.stop();
+            this.mPubnub_Multi = null;
+        }
+
+        if (this.mScheduleTaskExecutor != null) {
+            this.mScheduleTaskExecutor.shutdownNow();
+            this.mScheduleTaskExecutor = null;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_logout:
+                logout();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void logout() {
+        disconnectAndCleanup();
+
+        Intent toLogin = new Intent(this, LoginActivity.class);
+        startActivity(toLogin);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disconnectAndCleanup();
+    }
+
+    public void conversaton(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("username", username);
+        startActivity(intent);
+    }
 }
