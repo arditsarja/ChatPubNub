@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
@@ -24,12 +24,21 @@
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"
+        android:visibility="gone"
         />
 
     <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    </android.support.v4.view.ViewPager>
+
+    <ListView
+        android:id="@+id/chatDialogs"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 </LinearLayout>

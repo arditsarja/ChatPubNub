@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.google.common.collect.ImmutableMap;
 import com.pubnub.api.PNConfiguration;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private Random random = new Random();
     private String channel;
     public static SharedPreferences mSharedPrefs;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,29 @@ public class MainActivity extends AppCompatActivity {
         theChannel.add(PUBSUB_CHANNEL.get(0));
         initPubNub();
         initChannels();
+        listView = findViewById(R.id.chatDialogs);
+        fillListView();
+    }
 
+    private void fillListView() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item,theChannel);
+       listView.setAdapter(arrayAdapter);
+       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               startChat(position);
+           }
+       });
+    }
+
+    private void startChat(int postition) {
+        Intent intent = new Intent(this,PubSubTabContentFragment.class);
+        PostVariables.mPubSub = this.mPubSub;
+        PostVariables.mUsername = this.mUsername;
+        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
+        PostVariables.channel = this.theChannel.get(postition);
+
+        startActivity(intent);
     }
 
     public void openChat(View view) {
