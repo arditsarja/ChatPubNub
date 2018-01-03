@@ -5,8 +5,8 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
  */
 
 public class Person {
-    String name;
-    String image;
+    public String name;
+    public String image;
 
     public Person() {
     }

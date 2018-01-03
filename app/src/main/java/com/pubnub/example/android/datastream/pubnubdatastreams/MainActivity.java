@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.common.collect.ImmutableMap;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
@@ -74,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences mSharedPrefs;
     private ListView listView;
 
+
+    private boolean isSearchOpened = false;
+    private MaterialSearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,25 +102,77 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        initSearchView();
 //        initChanelList();
         theChannel.clear();
         theChannel.add(PUBSUB_CHANNEL.get(0));
+        myListItems.add(new Person(theChannel.get(0), "http://i.imgur.com/DvpvklR.png"));
         initPubNub();
         initChannels();
         listView = findViewById(R.id.chatDialogs);
         fillListView();
+
+    }
+
+    private void initSearchView() {
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //If closed Search View , lstView will return default
+                fillListView();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText != null && !newText.isEmpty()) {
+                    ArrayList<Person> lstFound = new ArrayList<>();
+                    for (Person item : myListItems) {
+                        if (item.name.contains(newText))
+                            lstFound.add(item);
+                    }
+
+                    fillListView(lstFound);
+                } else {
+                    //if search text is null
+                    //return default
+                    fillListView();
+                }
+                return true;
+            }
+
+        });
     }
 
     private void fillListView() {
 
+        fillListView(null);
+    }
 
-        myListItems.add(new Person(theChannel.get(0), "http://i.imgur.com/DvpvklR.png"));
+    private void fillListView(ArrayList<Person> lstFound) {
+        listView = findViewById(R.id.chatDialogs);
+        AdapterPerson adbPerson = null;
+        if (lstFound == null) {
 
-//then populate myListItems
-
-        AdapterPerson adbPerson = new AdapterPerson(MainActivity.this, 0, myListItems);
-
+            adbPerson = new AdapterPerson(MainActivity.this, 0, myListItems);
+        } else {
+            adbPerson = new AdapterPerson(MainActivity.this, 0, lstFound);
+        }
 //        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
         listView.setAdapter(adbPerson);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -315,6 +373,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 
