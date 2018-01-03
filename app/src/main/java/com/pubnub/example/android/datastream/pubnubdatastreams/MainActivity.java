@@ -29,6 +29,8 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.multi.MultiPnCall
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresenceListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresencePnCallback;
 import com.pubnub.example.android.datastream.pubnubdatastreams.presence.PresencePojo;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.AdapterPerson;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.Person;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PostVariables;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubPnCallback;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private static final List<String> MULTI_CHANNELS = Arrays.asList(Constants.MULTI_CHANNEL_NAMES.split(","));
     public static final List<String> PUBSUB_CHANNEL = Arrays.asList(Constants.CHANNEL_NAME.split(","));
-
+    private ArrayList<Person> myListItems = new ArrayList<Person>();
     private ScheduledExecutorService mScheduleTaskExecutor;
     private List<String> theChannel = new ArrayList<>();
 
@@ -105,8 +107,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillListView() {
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
-        listView.setAdapter(arrayAdapter);
+
+
+        myListItems.add(new Person(theChannel.get(0), "http://i.imgur.com/DvpvklR.png"));
+
+//then populate myListItems
+
+        AdapterPerson adbPerson = new AdapterPerson(MainActivity.this, 0, myListItems);
+
+//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
+        listView.setAdapter(adbPerson);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
         PostVariables.channel = this.theChannel.get(postition);
-
         startActivity(intent);
     }
 
@@ -131,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
         PostVariables.channel = this.theChannel.get(0);
-
         startActivity(intent);
     }
 
@@ -174,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         });
         builderSingle.show();
     }
-
 
     public void publish(View view) {
         final EditText mMessage = (EditText) MainActivity.this.findViewById(R.id.new_message);
@@ -348,7 +355,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void conversaton(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra("username", username);
         startActivity(intent);
     }
 

@@ -1,7 +1,7 @@
 package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
 /**
- * Created by User on 01/03/2018.
+ * Created by Ardit on 01/03/2018.
  */
 
 public class Message {

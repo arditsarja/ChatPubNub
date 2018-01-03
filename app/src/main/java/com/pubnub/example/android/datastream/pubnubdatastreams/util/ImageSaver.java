@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by User on 12/29/2017.
+ * Created by Ardit on 12/29/2017.
  */
 
 public class ImageSaver {
