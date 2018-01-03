@@ -11,17 +11,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.CameraPhoto;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -48,7 +52,14 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         listView.setAdapter(psAdapter);
         cameraPhoto = new CameraPhoto(getApplicationContext());
         getPremissions();
-
+        ImageView imageView = findViewById(R.id.circleImage);
+        TextView textView = findViewById(R.id.contactName);
+        textView.setText(channel);
+        Picasso.with(getApplicationContext())
+                .load("http://i.imgur.com/DvpvklR.png")
+                .resize(100,100)
+                .transform(new CircleTransform())
+                .into(imageView);
     }
 
     private void getPremissions() {
@@ -132,7 +143,10 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         );
     }
 
-
+    public void chatList(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {

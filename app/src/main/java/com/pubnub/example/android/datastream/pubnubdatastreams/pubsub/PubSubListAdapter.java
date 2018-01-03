@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kosalgeek.android.photoutil.ImageLoader;
+import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity1;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 
@@ -50,7 +51,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         PubSubPojo dsMsg = this.values.get(position);
         PubSubListRowUi msgView;
         String newLine = "";
-        if (dsMsg.getSender().equals(MainActivity1.mUsername))
+        if (dsMsg.getSender().equals(PostVariables.mUsername))
             convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
         else {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
@@ -66,7 +67,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
         msgView.sender.setText(dsMsg.getSender());
 
-        if (dsMsg.getMessage() instanceof ArrayList && ((ArrayList) dsMsg.getMessage()).get(0).equals("isphoto") && dsMsg.getSender().equals(MainActivity1.mUsername)) {
+        if (dsMsg.getMessage() instanceof ArrayList && ((ArrayList) dsMsg.getMessage()).get(0).equals("isphoto") && dsMsg.getSender().equals(PostVariables.mUsername)) {
 
             try {
                 Bitmap myBitmap = ImageLoader.init().from((String) ((ArrayList) dsMsg.getMessage()).get(1)).requestSize(512, 512).getBitmap();

@@ -1,12 +1,9 @@
 package com.pubnub.example.android.datastream.pubnubdatastreams;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,7 +36,6 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubTabC
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -109,18 +105,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillListView() {
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item,theChannel);
-       listView.setAdapter(arrayAdapter);
-       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               startChat(position);
-           }
-       });
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startChat(position);
+            }
+        });
     }
 
     private void startChat(int postition) {
-        Intent intent = new Intent(this,PubSubTabContentFragment.class);
+        Intent intent = new Intent(this, PubSubTabContentFragment.class);
         PostVariables.mPubSub = this.mPubSub;
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openChat(View view) {
-        Intent intent = new Intent(this,PubSubTabContentFragment.class);
+        Intent intent = new Intent(this, PubSubTabContentFragment.class);
         PostVariables.mPubSub = this.mPubSub;
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
@@ -328,6 +324,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void logout(View v) {
+        logout();
+    }
+
     public void logout() {
         disconnectAndCleanup();
 
@@ -351,4 +351,5 @@ public class MainActivity extends AppCompatActivity {
 //        intent.putExtra("username", username);
         startActivity(intent);
     }
+
 }
