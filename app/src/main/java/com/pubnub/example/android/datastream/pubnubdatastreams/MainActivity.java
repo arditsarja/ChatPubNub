@@ -39,6 +39,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PostVariab
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubPnCallback;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubTabContentFragment;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.Samples;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Person> myListItems = new ArrayList<Person>();
     private ScheduledExecutorService mScheduleTaskExecutor;
     private List<String> theChannel = new ArrayList<>();
+    private List<String> subbscribechannel = new ArrayList<>();
 
     private PubNub mPubnub_DataStream;
     private PubSubListAdapter mPubSub;
@@ -117,7 +119,11 @@ public class MainActivity extends AppCompatActivity {
 //        initChanelList();
         theChannel.clear();
         theChannel.add(PUBSUB_CHANNEL.get(0));
-        myListItems.add(new Person(theChannel.get(0), "http://i.imgur.com/DvpvklR.png"));
+//        myListItems.add(new Person("Ardit", "http://i.imgur.com/DvpvklR.png",theChannel.get(0)));
+        myListItems=new Samples().getData(mUsername);
+        for (Person person:myListItems ) {
+            subbscribechannel.add(person.channel);
+        }
         initPubNub();
         initChannels();
         listView = findViewById(R.id.chatDialogs);
@@ -191,12 +197,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startChat(int postition) {
-        Intent intent = new Intent(this, PubSubTabContentFragment.class);
-        PostVariables.mPubSub = this.mPubSub;
-        PostVariables.mUsername = this.mUsername;
-        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
-        PostVariables.channel = this.theChannel.get(postition);
-        startActivity(intent);
+//        try {
+        List <String> chnannel = new ArrayList<>();
+            Intent intent = new Intent(this, PubSubTabContentFragment.class);
+            PostVariables.mPubSub = this.mPubSub;
+            PostVariables.mUsername = this.mUsername;
+            PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
+//            PostVariables.channel = this.theChannel.get(postition);
+            PostVariables.person = this.myListItems.get(postition);
+            chnannel.add(PostVariables.person.channel);
+            hereNow(chnannel);
+            startActivity(intent);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 
     public void openChat(View view) {
@@ -291,28 +305,8 @@ public class MainActivity extends AppCompatActivity {
         this.mPubnub_DataStream.addListener(this.mPubSubPnCallback);
         this.mPubnub_DataStream.addListener(this.mPresencePnCallback);
 
-        this.mPubnub_DataStream.subscribe().channels(theChannel).withPresence().execute();
-        this.mPubnub_DataStream.hereNow().channels(theChannel).async(new PNCallback<PNHereNowResult>() {
-            @Override
-            public void onResponse(PNHereNowResult result, PNStatus status) {
-                if (status.isError()) {
-                    return;
-                }
-
-                try {
-                    Log.v(TAG, JsonUtil.asJson(result));
-
-                    for (Map.Entry<String, PNHereNowChannelData> entry : result.getChannels().entrySet()) {
-                        for (PNHereNowOccupantData occupant : entry.getValue().getOccupants()) {
-                            MainActivity.this.mPresence.add(new PresencePojo(occupant.getUuid(), "join", DateTimeUtil.getTimeStampUtc()));
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
+        this.mPubnub_DataStream.subscribe().channels(subbscribechannel).withPresence().execute();
+        hereNow(null);
 
         this.mPubnub_Multi.addListener(mMultiPnCallback);
         this.mPubnub_Multi.subscribe().channels(MULTI_CHANNELS).execute();
@@ -351,6 +345,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }, 0, 15, TimeUnit.SECONDS);
+    }
+
+    private void hereNow(List <String> channels) {
+        List <String> channel = subbscribechannel;
+        if(channels!=null)
+            channel=channels;
+
+        this.mPubnub_DataStream.hereNow().channels(channel).async(new PNCallback<PNHereNowResult>() {
+            @Override
+            public void onResponse(PNHereNowResult result, PNStatus status) {
+                if (status.isError()) {
+                    return;
+                }
+
+                try {
+                    Log.v(TAG, JsonUtil.asJson(result));
+
+                    for (Map.Entry<String, PNHereNowChannelData> entry : result.getChannels().entrySet()) {
+                        for (PNHereNowOccupantData occupant : entry.getValue().getOccupants()) {
+                            MainActivity.this.mPresence.add(new PresencePojo(occupant.getUuid(), "join", DateTimeUtil.getTimeStampUtc()));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     private void disconnectAndCleanup() {

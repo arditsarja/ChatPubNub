@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kosalgeek.android.photoutil.ImageLoader;
-import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
-import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity1;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 
 import java.util.ArrayList;
@@ -51,12 +48,18 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         PubSubPojo dsMsg = this.values.get(position);
         PubSubListRowUi msgView;
         String newLine = "";
+
+
         if (dsMsg.getSender().equals(PostVariables.mUsername))
             convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
         else {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
             newLine = "\n";
         }
+
+        if ((!dsMsg.getSender().equals(PostVariables.person.name))&&(!dsMsg.getSender().equals(PostVariables.mUsername)))
+            convertView.setVisibility(View.GONE);
+
         msgView = new PubSubListRowUi();
         msgView.sender = (TextView) convertView.findViewById(R.id.sender);
         msgView.image = (ImageView) convertView.findViewById(R.id.imageView);

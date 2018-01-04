@@ -12,4 +12,5 @@ public class PostVariables {
     public static String mUsername;
     public static PubNub mPubnub_DataStream;
     public static String channel;
+    public static Person person;
 }

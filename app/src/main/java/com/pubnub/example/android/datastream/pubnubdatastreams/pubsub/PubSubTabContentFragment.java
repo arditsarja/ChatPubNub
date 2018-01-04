@@ -38,6 +38,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     private String mUsername;
     private ImageButton btnCamera;
     CameraPhoto cameraPhoto;
+    private Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +49,17 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         mUsername = PostVariables.mUsername;
         mPubnub_DataStream = PostVariables.mPubnub_DataStream;
         channel = PostVariables.channel;
+        person = PostVariables.person;
+
         ListView listView = (ListView) findViewById(R.id.message_list);
         listView.setAdapter(psAdapter);
         cameraPhoto = new CameraPhoto(getApplicationContext());
         getPremissions();
         ImageView imageView = findViewById(R.id.circleImage);
         TextView textView = findViewById(R.id.contactName);
-        textView.setText(channel);
+        textView.setText(person.name);
         Picasso.with(getApplicationContext())
-                .load("http://i.imgur.com/DvpvklR.png")
+                .load(person.image)
                 .resize(100,100)
                 .transform(new CircleTransform())
                 .into(imageView);
@@ -123,7 +126,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
             message = ImmutableMap.<String, Object>of("sender", this.mUsername, "message", data, "timestamp", DateTimeUtil.getTimeStampUtc());
 
 //        MainActivity.this.mPubnub_DataStream.publish().channel(Constants.CHANNEL_NAME).message(message).async(
-        mPubnub_DataStream.publish().channel(channel).message(message).async(
+        mPubnub_DataStream.publish().channel(person.channel).message(message).async(
 
                 new PNCallback<PNPublishResult>() {
                     @Override
