@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,13 +12,14 @@
     >
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
     <LinearLayout
+        android:id="@+id/toolbarLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -42,11 +44,11 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:searchBackground="@color/colorPrimary"
-            xmlns:searchSuggestionBackground="@color/colorPrimary"
-            xmlns:searchCloseIcon="@drawable/ic_action_navigation_close_inverted"
-            xmlns:searchBackIcon="@drawable/ic_action_navigation_arrow_back_inverted"
-            xmlns:searchSuggestionIcon="@drawable/ic_suggestion"
+            app:searchBackground="@color/colorPrimary"
+            app:searchSuggestionBackground="@color/colorPrimary"
+            app:searchCloseIcon="@drawable/ic_action_navigation_close_inverted"
+            app:searchBackIcon="@drawable/ic_action_navigation_arrow_back_inverted"
+            app:searchSuggestionIcon="@drawable/ic_suggestion"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF">
 

@@ -3,6 +3,7 @@ package com.pubnub.example.android.datastream.pubnubdatastreams;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.common.collect.ImmutableMap;
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isSearchOpened = false;
     private MaterialSearchView searchView;
+    private AdapterPerson adbPerson;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +106,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        linearLayout = (LinearLayout) findViewById(R.id.toolbarLinearLayout);
         initSearchView();
 //        initChanelList();
         theChannel.clear();
@@ -122,12 +130,13 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-
+                linearLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onSearchViewClosed() {
                 //If closed Search View , lstView will return default
+                linearLayout.setVisibility(View.VISIBLE);
                 fillListView();
             }
         });
@@ -143,10 +152,9 @@ public class MainActivity extends AppCompatActivity {
                 if (newText != null && !newText.isEmpty()) {
                     ArrayList<Person> lstFound = new ArrayList<>();
                     for (Person item : myListItems) {
-                        if (item.name.contains(newText))
+                        if (item.name.toLowerCase().contains(newText.toLowerCase()))
                             lstFound.add(item);
                     }
-
                     fillListView(lstFound);
                 } else {
                     //if search text is null
@@ -166,9 +174,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillListView(ArrayList<Person> lstFound) {
         listView = findViewById(R.id.chatDialogs);
-        AdapterPerson adbPerson = null;
-        if (lstFound == null) {
 
+        if (lstFound == null) {
             adbPerson = new AdapterPerson(MainActivity.this, 0, myListItems);
         } else {
             adbPerson = new AdapterPerson(MainActivity.this, 0, lstFound);
