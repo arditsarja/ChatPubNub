@@ -73,7 +73,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
             Picasso.with(getContext())
                     .load(lPerson.get(position).image)
-                    .resize(100,100)
+                    .resize(150,150)
                     .transform(new CircleTransform())
                     .into(holder.display_image);
             holder.display_name.setText(lPerson.get(position).name);

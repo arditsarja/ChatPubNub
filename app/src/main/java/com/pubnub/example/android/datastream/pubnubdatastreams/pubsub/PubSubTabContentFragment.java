@@ -16,10 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
+import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.example.android.datastream.pubnubdatastreams.Constants;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.CameraPhoto;
@@ -34,9 +36,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     private final String TAG = PubSubTabContentFragment.class.getName();
     private PubSubListAdapter psAdapter;
     private PubNub mPubnub_DataStream;
-    private String channel;
     private String mUsername;
-    private ImageButton btnCamera;
     CameraPhoto cameraPhoto;
     private Person person;
 
@@ -44,13 +44,10 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_pubsub);
-
         psAdapter = PostVariables.mPubSub;
         mUsername = PostVariables.mUsername;
         mPubnub_DataStream = PostVariables.mPubnub_DataStream;
-        channel = PostVariables.channel;
         person = PostVariables.person;
-
         ListView listView = (ListView) findViewById(R.id.message_list);
         listView.setAdapter(psAdapter);
         cameraPhoto = new CameraPhoto(getApplicationContext());
@@ -89,9 +86,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         sendMessage(cameraPhoto.getData());
-
     }
 
     public void openCamera(View view) {
@@ -163,4 +158,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     public void setAdapter(PubSubListAdapter psAdapter) {
         this.psAdapter = psAdapter;
     }
+
+
+
 }

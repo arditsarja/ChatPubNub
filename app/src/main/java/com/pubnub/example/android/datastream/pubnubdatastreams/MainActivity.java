@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 //            PostVariables.channel = this.theChannel.get(postition);
             PostVariables.person = this.myListItems.get(postition);
             chnannel.add(PostVariables.person.channel);
-            hereNow(chnannel);
+
             startActivity(intent);
 //        }catch (Exception e){
 //            e.printStackTrace();
@@ -306,7 +306,27 @@ public class MainActivity extends AppCompatActivity {
         this.mPubnub_DataStream.addListener(this.mPresencePnCallback);
 
         this.mPubnub_DataStream.subscribe().channels(subbscribechannel).withPresence().execute();
-        hereNow(null);
+        this.mPubnub_DataStream.hereNow().channels(subbscribechannel).async(new PNCallback<PNHereNowResult>() {
+            @Override
+            public void onResponse(PNHereNowResult result, PNStatus status) {
+                if (status.isError()) {
+                    return;
+                }
+
+                try {
+                    Log.v(TAG, JsonUtil.asJson(result));
+
+                    for (Map.Entry<String, PNHereNowChannelData> entry : result.getChannels().entrySet()) {
+                        for (PNHereNowOccupantData occupant : entry.getValue().getOccupants()) {
+                            MainActivity.this.mPresence.add(new PresencePojo(occupant.getUuid(), "join", DateTimeUtil.getTimeStampUtc()));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         this.mPubnub_Multi.addListener(mMultiPnCallback);
         this.mPubnub_Multi.subscribe().channels(MULTI_CHANNELS).execute();
@@ -347,33 +367,6 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 15, TimeUnit.SECONDS);
     }
 
-    private void hereNow(List <String> channels) {
-        List <String> channel = subbscribechannel;
-        if(channels!=null)
-            channel=channels;
-
-        this.mPubnub_DataStream.hereNow().channels(channel).async(new PNCallback<PNHereNowResult>() {
-            @Override
-            public void onResponse(PNHereNowResult result, PNStatus status) {
-                if (status.isError()) {
-                    return;
-                }
-
-                try {
-                    Log.v(TAG, JsonUtil.asJson(result));
-
-                    for (Map.Entry<String, PNHereNowChannelData> entry : result.getChannels().entrySet()) {
-                        for (PNHereNowOccupantData occupant : entry.getValue().getOccupants()) {
-                            MainActivity.this.mPresence.add(new PresencePojo(occupant.getUuid(), "join", DateTimeUtil.getTimeStampUtc()));
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
 
     private void disconnectAndCleanup() {
         getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE).edit().clear().commit();
