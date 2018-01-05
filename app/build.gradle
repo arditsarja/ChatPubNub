@@ -7,16 +7,16 @@ android {
     defaultConfig {
         applicationId "com.pubnub.example.android.datastream.pubnubdatastreams"
         minSdkVersion 22
-targetSdkVersion 26
-versionCode 1
-versionName "1.0"
-}
-buildTypes {
-    release {
-        minifyEnabled false
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
     }
-}
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {

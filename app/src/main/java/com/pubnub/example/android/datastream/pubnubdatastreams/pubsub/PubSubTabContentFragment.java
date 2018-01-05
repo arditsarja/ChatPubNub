@@ -10,18 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
-import com.pubnub.api.PNConfiguration;
+import com.pubnub.api.Callback;
 import com.pubnub.api.PubNub;
+import com.pubnub.api.PubnubError;
 import com.pubnub.api.callbacks.PNCallback;
+import com.pubnub.api.endpoints.History;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
-import com.pubnub.example.android.datastream.pubnubdatastreams.Constants;
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
+import com.pubnub.api.models.consumer.history.PNHistoryResult;
 import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.CameraPhoto;
@@ -39,6 +41,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     private String mUsername;
     CameraPhoto cameraPhoto;
     private Person person;
+    private History history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +60,42 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         textView.setText(person.name);
         Picasso.with(getApplicationContext())
                 .load(person.image)
-                .resize(100,100)
+                .resize(100, 100)
                 .transform(new CircleTransform())
                 .into(imageView);
+
+        Callback callback = new Callback() {
+            public void successCallback(String channel, Object response) {
+                System.out.println(response.toString());
+            }
+
+            public void errorCallback(String channel, PubnubError error) {
+                System.out.println(error.toString());
+            }
+        };
+
+        mPubnub_DataStream.history()
+                .channel(person.channel) // where to fetch history from
+                .count(50) // how many items to fetch
+                .async(new PNCallback<PNHistoryResult>() {
+                    @Override
+                    public void onResponse(PNHistoryResult result, PNStatus status) {
+                        if (!status.isError()) {
+                            for (PNHistoryItemResult itemResult : result.getMessages()) {
+                                try {
+                                    PubSubPojo msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
+                                    psAdapter.add(msg);
+                                    Log.v("History of Channel", itemResult.getEntry().toString());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
+                });
     }
+
 
     private void getPremissions() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -158,7 +193,6 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     public void setAdapter(PubSubListAdapter psAdapter) {
         this.psAdapter = psAdapter;
     }
-
 
 
 }
