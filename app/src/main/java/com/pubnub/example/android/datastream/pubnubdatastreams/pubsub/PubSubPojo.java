@@ -32,6 +32,10 @@ public class PubSubPojo {
         return message;
     }
 
+    public String getTimestampOriginal() {
+        return timestampOriginal;
+    }
+
     public String sendMessage() {
         String message = (String) this.message;
         int sdf = android.os.Build.VERSION.SDK_INT;

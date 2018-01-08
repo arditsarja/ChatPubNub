@@ -9,15 +9,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
-import com.pubnub.api.Callback;
 import com.pubnub.api.PubNub;
-import com.pubnub.api.PubnubError;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.endpoints.History;
 import com.pubnub.api.models.consumer.PNPublishResult;
@@ -41,6 +40,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     private String mUsername;
     CameraPhoto cameraPhoto;
     private Person person;
+    private long start;
     private History history;
 
     @Override
@@ -53,6 +53,22 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         person = PostVariables.person;
         ListView listView = (ListView) findViewById(R.id.message_list);
         listView.setAdapter(psAdapter);
+        getHistory();
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0) {
+                    Log.e("element is", "element is ------->" + view.toString() + "->" + firstVisibleItem + "->" + visibleItemCount + "->" + totalItemCount);
+                    getHistory();
+// Toast.makeText(PubSubTabContentFragment.this,"end of road",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         cameraPhoto = new CameraPhoto(getApplicationContext());
         getPremissions();
         ImageView imageView = findViewById(R.id.circleImage);
@@ -63,20 +79,17 @@ public class PubSubTabContentFragment extends AppCompatActivity {
                 .resize(100, 100)
                 .transform(new CircleTransform())
                 .into(imageView);
+//        getHistory();
 
-        Callback callback = new Callback() {
-            public void successCallback(String channel, Object response) {
-                System.out.println(response.toString());
-            }
+    }
 
-            public void errorCallback(String channel, PubnubError error) {
-                System.out.println(error.toString());
-            }
-        };
-
-        mPubnub_DataStream.history()
-                .channel(person.channel) // where to fetch history from
-                .count(50) // how many items to fetch
+    private void getHistory() {
+       History history= mPubnub_DataStream.history();
+        if (start != 0)
+            history.start(start);
+        history.channel(person.channel)
+                .count(5)
+                .includeTimetoken(true)
                 .async(new PNCallback<PNHistoryResult>() {
                     @Override
                     public void onResponse(PNHistoryResult result, PNStatus status) {
@@ -84,16 +97,18 @@ public class PubSubTabContentFragment extends AppCompatActivity {
                             for (PNHistoryItemResult itemResult : result.getMessages()) {
                                 try {
                                     PubSubPojo msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
-                                    psAdapter.add(msg);
+                                    psAdapter.addFormServer(msg);
                                     Log.v("History of Channel", itemResult.getEntry().toString());
+//                            start =Long.parseLong(msg.getTimestampOriginal())+1;
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
+                            start = result.getEndTimetoken();
                         }
                     }
-
                 });
+
     }
 
 

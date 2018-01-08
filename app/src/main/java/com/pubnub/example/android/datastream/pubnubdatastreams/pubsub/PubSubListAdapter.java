@@ -28,6 +28,18 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
+    public void addFormServer(PubSubPojo message) {
+;
+        if ((message.getSender().equals(PostVariables.person.name))||(message.getSender().equals(PostVariables.mUsername)))
+            this.values.add(0,message);
+
+        ((Activity) this.context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
 
     @Override
     public void add(PubSubPojo message) {
