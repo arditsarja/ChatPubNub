@@ -6,10 +6,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +41,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     CameraPhoto cameraPhoto;
     private Person person;
     private long start;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private History history;
 
     @Override
@@ -51,24 +52,17 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         mUsername = PostVariables.mUsername;
         mPubnub_DataStream = PostVariables.mPubnub_DataStream;
         person = PostVariables.person;
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         ListView listView = (ListView) findViewById(R.id.message_list);
         listView.setAdapter(psAdapter);
         getHistory();
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0) {
-                    Log.e("element is", "element is ------->" + view.toString() + "->" + firstVisibleItem + "->" + visibleItemCount + "->" + totalItemCount);
-                    getHistory();
-// Toast.makeText(PubSubTabContentFragment.this,"end of road",Toast.LENGTH_SHORT).show();
-                }
+            public void onRefresh() {
+                getHistory();
             }
         });
+
         cameraPhoto = new CameraPhoto(getApplicationContext());
         getPremissions();
         ImageView imageView = findViewById(R.id.circleImage);
@@ -83,32 +77,36 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     }
 
+
     private void getHistory() {
-       History history= mPubnub_DataStream.history();
+        History history = mPubnub_DataStream.history();
         if (start != 0)
             history.start(start);
         history.channel(person.channel)
-                .count(5)
+                .count(3)
                 .includeTimetoken(true)
                 .async(new PNCallback<PNHistoryResult>() {
                     @Override
                     public void onResponse(PNHistoryResult result, PNStatus status) {
                         if (!status.isError()) {
-                            for (PNHistoryItemResult itemResult : result.getMessages()) {
+
+                            for (int i = result.getMessages().size() - 1; i >= 0; i--) {
+                                PNHistoryItemResult itemResult = result.getMessages().get(i);
                                 try {
                                     PubSubPojo msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
                                     psAdapter.addFormServer(msg);
+                                    if (i == 0)
+                                        start = result.getMessages().get(i).getTimetoken();
                                     Log.v("History of Channel", itemResult.getEntry().toString());
-//                            start =Long.parseLong(msg.getTimestampOriginal())+1;
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                            start = result.getEndTimetoken();
+
                         }
                     }
                 });
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChatPubNub.iml" filepath="$PROJECT_DIR$/ChatPubNub.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://C:\Users\User\AndroidStudioProjects\ChatPubNub\pubnub-android-data-streams-tutorial.iml" filepath="C:\Users\User\AndroidStudioProjects\ChatPubNub\pubnub-android-data-streams-tutorial.iml" />
     </modules>
   </component>

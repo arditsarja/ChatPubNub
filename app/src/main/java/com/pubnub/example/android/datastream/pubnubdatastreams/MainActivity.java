@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private MultiPnCallback mMultiPnCallback;
 
 
-    private String mUsername;
+    public static String mUsername;
     private Random random = new Random();
     private String channel;
     public static SharedPreferences mSharedPrefs;
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         theChannel.clear();
         theChannel.add(PUBSUB_CHANNEL.get(0));
 //        myListItems.add(new Person("Ardit", "http://i.imgur.com/DvpvklR.png",theChannel.get(0)));
-        myListItems=new Samples().getData(mUsername);
-        for (Person person:myListItems ) {
+        myListItems = new Samples().getData(mUsername);
+        for (Person person : new Samples().getData(mUsername)) {
             subbscribechannel.add(person.channel);
         }
         initPubNub();
@@ -198,16 +198,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void startChat(int postition) {
 //        try {
-        List <String> chnannel = new ArrayList<>();
-            Intent intent = new Intent(this, PubSubTabContentFragment.class);
-            PostVariables.mPubSub = this.mPubSub;
-            PostVariables.mUsername = this.mUsername;
-            PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
+        List<String> chnannel = new ArrayList<>();
+        Intent intent = new Intent(this, PubSubTabContentFragment.class);
+        PostVariables.mPubSub = this.mPubSub;
+        PostVariables.mUsername = this.mUsername;
+        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
 //            PostVariables.channel = this.theChannel.get(postition);
-            PostVariables.person = this.myListItems.get(postition);
-            chnannel.add(PostVariables.person.channel);
+        PostVariables.person = this.myListItems.get(postition);
+        chnannel.add(PostVariables.person.channel);
 
-            startActivity(intent);
+        startActivity(intent);
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
