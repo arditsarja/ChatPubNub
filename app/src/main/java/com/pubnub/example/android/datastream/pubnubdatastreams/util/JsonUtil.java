@@ -24,7 +24,8 @@ public class JsonUtil {
     }
 
     public static <T> T convert(JsonNode value, Class<T> clazz) throws Exception {
-        return mapper.treeToValue(value, clazz);
+//        return mapper.treeToValue(value, clazz);
+        return mapper.readValue(String.valueOf(value),clazz);
     }
 
     public static <T> T convert(Map<String, Object> value, Class<T> clazz) throws Exception {

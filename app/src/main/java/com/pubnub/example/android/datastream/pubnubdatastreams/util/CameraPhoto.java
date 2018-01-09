@@ -102,8 +102,8 @@ public class CameraPhoto {
         return list;
     }
 
-    public ArrayList<Object> getData() {
-        ArrayList<Object> result = new ArrayList<Object>();
+    public ArrayList<String> getData() {
+        ArrayList<String> result = new ArrayList<String>();
         result.add("isphoto");
         result.add(getPhotoPath());
 //        result.add(convertFileToByteArrayString());

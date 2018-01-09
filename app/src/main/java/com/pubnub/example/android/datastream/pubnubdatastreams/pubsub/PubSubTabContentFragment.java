@@ -31,6 +31,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PubSubTabContentFragment extends AppCompatActivity {
@@ -137,17 +138,8 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     }
 
     public void openCamera(View view) {
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        try {
-//            startActivityForResult(intent, 0);
-//
-//
-//        } catch (Exception e) {
-//            Log.v("Message", e.getMessage());
-//        }
         try {
             startActivityForResult(cameraPhoto.takePhotoIntent(), 0);
-
         } catch (Exception e) {
             Log.v("Message error", e.getMessage());
         }
@@ -158,18 +150,19 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         sendMessage(null);
     }
 
-    private void sendMessage(ArrayList data) {
+    private void sendMessage(ArrayList<String> data) {
         final EditText mMessage = (EditText) this.findViewById(R.id.new_message);
-        Map<String, Object> message = null;
-
-        if (data == null)
-            message = ImmutableMap.<String, Object>of("sender", this.mUsername, "message", mMessage.getText().toString(), "timestamp", DateTimeUtil.getTimeStampUtc());
-        else
-            message = ImmutableMap.<String, Object>of("sender", this.mUsername, "message", data, "timestamp", DateTimeUtil.getTimeStampUtc());
-
+        Map<String, String> message =new HashMap<String,String>();
+        message.put("id","id");
+        message.put("uniqueId","uniqueId");
+        message.put("message",data!=null?data.get(1):mMessage.getText().toString());
+        message.put("messageType",data!=null?data.get(0):"string");
+        message.put("sender",mUsername);
+        message.put("channel",person.channel);
+        message.put("sendDate",DateTimeUtil.getTimeStampUtc());
+        message.put("receiveDate","receiveDate");
 //        MainActivity.this.mPubnub_DataStream.publish().channel(Constants.CHANNEL_NAME).message(message).async(
         mPubnub_DataStream.publish().channel(person.channel).message(message).async(
-
                 new PNCallback<PNPublishResult>() {
                     @Override
                     public void onResponse(PNPublishResult result, PNStatus status) {
@@ -190,6 +183,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     public void chatList(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        PostVariables.person=null;
         startActivity(intent);
     }
 //    @Override

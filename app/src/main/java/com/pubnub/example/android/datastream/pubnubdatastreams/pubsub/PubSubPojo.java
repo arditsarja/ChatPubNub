@@ -5,71 +5,92 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-
 public class PubSubPojo {
     public static final int TYPE_STRING = 0;
     public static final int TYPE_IMAGE = 1;
     public static final int TYPE_FILE = 2;
 
+
+    private final String id;
+    private final String uniqueId;
+    private final String message;
+    private final String messageType;
     private final String sender;
-    private final Object message;
+    private final String channel;
+    private final String sendDate;
+    private final String receiveDate;
     private final String timestamp;
-    private final String timestampOriginal;
+
     private DateTimeUtil dateTimeUtil;
 
 
-    public PubSubPojo(@JsonProperty("sender") String sender, @JsonProperty("message") Object message, @JsonProperty("timestamp") String timestamp) {
-        this.sender = sender;
-        this.message = message;
-        this.timestamp = timestamp;
-        this.timestampOriginal = timestamp;
+    public PubSubPojo(@JsonProperty("id ") String id,
+                      @JsonProperty("uniqueId ") String uniqueId,
+                      @JsonProperty("message") String message,
+                      @JsonProperty("messageType ") String messageType,
+                      @JsonProperty("sender") String sender,
+                      @JsonProperty("channel") String channel,
+                      @JsonProperty("sendDate") String sendDate,
+                      @JsonProperty("receiveDate") String receiveDate) {
+        this.id = id!=null?id:"";
+        this.uniqueId = uniqueId!=null?uniqueId:"";
+        this.message = message!=null?message:"";
+        this.messageType = messageType!=null?messageType:"";
+        this.sender = sender!=null?sender:"";
+        this.channel = channel!=null?channel:"";
+        this.sendDate = sendDate!=null?sendDate:"";
+        this.receiveDate = receiveDate!=null?receiveDate:"";
+        this.timestamp = sendDate!=null?sendDate:"";
+
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
 
     public String getSender() {
         return sender;
     }
 
-    public Object getMessage() {
-        return message;
+    public String getChannel() {
+        return channel;
     }
 
-    public String getTimestampOriginal() {
-        return timestampOriginal;
+    public String getSendDate() {
+        return sendDate;
     }
+
+    public String getReceiveDate() {
+        return receiveDate;
+    }
+
+    public DateTimeUtil getDateTimeUtil() {
+        return dateTimeUtil;
+    }
+
 
     public int getTypeOfmessage() {
-        if (this.message instanceof ArrayList) {
-            if (((ArrayList) message).get(0).equals("isphoto"))
-                return TYPE_STRING;
-            if (((ArrayList) message).get(0).equals("isfile"))
-                return TYPE_FILE;
-        }
+
+        if ((messageType).equals("isphoto"))
+            return TYPE_STRING;
+        if ((messageType).equals("isfile"))
+            return TYPE_FILE;
+
         return TYPE_STRING;
     }
 
-    public String sendMessage() {
-        String message = (String) this.message;
-        int sdf = android.os.Build.VERSION.SDK_INT;
-        if ((!message.contains("isphoto")))
-            return message;
-        message = message.replace("isphoto", "");
-        File fi = new File(message);
-        byte[] bytes = {};
-
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                bytes = Files.readAllBytes(fi.toPath());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "isphoto" + new String(bytes);
-    }
 
     public String getTimestamp() {
         return timestamp.substring(11, 16);
@@ -110,8 +131,7 @@ public class PubSubPojo {
     public String toString() {
         return MoreObjects.toStringHelper(PubSubPojo.class)
                 .add("sender", sender)
-//                .add("message", message.toString())
-                .add("message", getMessage().toString())
+                .add("message", message)
                 .add("timestamp", timestamp)
                 .toString();
     }

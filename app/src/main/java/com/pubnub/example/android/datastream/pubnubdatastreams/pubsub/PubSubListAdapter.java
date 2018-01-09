@@ -29,7 +29,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         this.inflater = LayoutInflater.from(context);
     }
     public void addFormServer(PubSubPojo message) {
-;
+
         if ((message.getSender().equals(PostVariables.person.name))||(message.getSender().equals(PostVariables.mUsername)))
             this.values.add(0,message);
 
@@ -84,10 +84,9 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
         msgView.sender.setText(dsMsg.getSender());
 
-        if (dsMsg.getMessage() instanceof ArrayList && ((ArrayList) dsMsg.getMessage()).get(0).equals("isphoto") && dsMsg.getSender().equals(PostVariables.mUsername)) {
-
+        if (dsMsg.getMessageType().equals("photo")&& PostVariables.mUsername.equals(dsMsg.getSender())) {
             try {
-                Bitmap myBitmap = ImageLoader.init().from((String) ((ArrayList) dsMsg.getMessage()).get(1)).requestSize(512, 512).getBitmap();
+                Bitmap myBitmap = ImageLoader.init().from(dsMsg.getMessage()).requestSize(512, 512).getBitmap();
                 msgView.image.setImageBitmap(myBitmap);
             } catch (Exception e) {
             }
