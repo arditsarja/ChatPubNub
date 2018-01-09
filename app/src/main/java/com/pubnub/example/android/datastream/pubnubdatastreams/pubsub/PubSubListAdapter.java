@@ -67,6 +67,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             convertView = inflater.inflate(R.layout.list_row_pubsub_sender, parent, false);
         else {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
+            newLine = "";
             newLine = "\n";
         }
 
@@ -93,7 +94,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             msgView.image.setVisibility(View.VISIBLE);
             msgView.message.setText("");
         } else {
-            msgView.message.setText(newLine + dsMsg.getMessage() + "\n");
+            msgView.message.setText(newLine + dsMsg.getMessage() );
             msgView.message.setVisibility(View.VISIBLE);
         }
         msgView.timestamp.setText(dsMsg.getTimestamp());

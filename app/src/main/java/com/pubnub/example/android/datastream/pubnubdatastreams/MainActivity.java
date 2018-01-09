@@ -25,6 +25,8 @@ import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
+import com.pubnub.api.models.consumer.history.PNHistoryResult;
 import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
 import com.pubnub.api.models.consumer.presence.PNHereNowResult;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private MultiListAdapter mMulti;
     private MultiPnCallback mMultiPnCallback;
 
-
+    private PNCallback<PNHistoryResult> hitoryResult;
     public static String mUsername;
     private Random random = new Random();
     private String channel;
@@ -124,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 //        myListItems.add(new Person("Ardit", "http://i.imgur.com/DvpvklR.png",theChannel.get(0)));
         myListItems = new Samples().getData(mUsername);
         initPubNub();
+
+
         for (Person person : new Samples().getData(mUsername)) {
             subbscribechannel.add(person.channel);
         }
@@ -133,6 +137,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void history(String channel, final int index) {
+        mPubnub_DataStream.history().channel(channel).count(1).async(new PNCallback<PNHistoryResult>() {
+            @Override
+            public void onResponse(PNHistoryResult result, PNStatus status) {
+                if (!status.isError()) {
+
+
+                    PNHistoryItemResult itemResult = result.getMessages().get(0);
+                    try {
+                        msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
+                        Person person = myListItems.get(index);
+                        person.lastMessage = msg.getMessageFromType();
+                        adbPerson.update(person, index);
+//                        adbPerson.add(person);
+//                        myListItems.get(index).lastMessage=msg.getMessageFromType();
+                        Log.v("History of Channel", itemResult.getEntry().toString());
+                        Log.v("History of Channel", itemResult.getEntry().get("message").toString());
+                        Log.v("History of Channel", itemResult.getEntry().get("message").asText());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+    }
 
     private void initSearchView() {
 
@@ -177,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillListView() {
-
         fillListView(null);
     }
 
@@ -185,10 +215,11 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.chatDialogs);
 
         if (lstFound == null) {
-            adbPerson = new AdapterPerson(MainActivity.this, 0, myListItems);
-        } else {
-            adbPerson = new AdapterPerson(MainActivity.this, 0, lstFound);
+            lstFound = myListItems;
         }
+
+        adbPerson = new AdapterPerson(MainActivity.this, 0);
+
 //        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
         listView.setAdapter(adbPerson);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -197,6 +228,9 @@ public class MainActivity extends AppCompatActivity {
                 startChat(position);
             }
         });
+        for (int i = 0; i < lstFound.size(); i++) {
+            history(lstFound.get(i).channel, i);
+        }
     }
 
     private void startChat(int postition) {

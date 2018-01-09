@@ -20,10 +20,20 @@ import java.util.ArrayList;
 
 public class AdapterPerson extends ArrayAdapter<Person> {
     private Activity activity;
-    private ArrayList<Person> lPerson;
+    private ArrayList<Person> lPerson = new ArrayList<>();
     private static LayoutInflater inflater = null;
 
-    public AdapterPerson (Activity activity, int textViewResourceId,ArrayList<Person> _lPerson) {
+    public AdapterPerson(Activity activity, int textViewResourceId) {
+        super(activity, textViewResourceId);
+        try {
+            this.activity = activity;
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        } catch (Exception e) {
+        }
+    }
+
+    public AdapterPerson(Activity activity, int textViewResourceId, ArrayList<Person> _lPerson) {
         super(activity, textViewResourceId, _lPerson);
         try {
             this.activity = activity;
@@ -35,6 +45,35 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
         }
     }
+
+    public void update(Person person, int index) {
+        if (lPerson.size() == index)
+            lPerson.add(person);
+        else
+            lPerson.set(index, person);
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    @Override
+    public void add(Person person) {
+//        this.values.add(0, message);
+        lPerson.add(person);
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
+
 
     public int getCount() {
         return lPerson.size();
@@ -75,12 +114,12 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
             Picasso.with(getContext())
                     .load(lPerson.get(position).image)
-                    .resize(150,150)
+                    .resize(150, 150)
                     .transform(new CircleTransform())
                     .into(holder.display_image);
             holder.display_name.setText(lPerson.get(position).name);
-//            holder.last_message.setText(lPerson.get(position).lastMessage);
-            holder.last_message.setText("test");
+            holder.last_message.setText(lPerson.get(position).lastMessage);
+//            holder.last_message.setText("test");
 
 
         } catch (Exception e) {
