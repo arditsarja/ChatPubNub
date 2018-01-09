@@ -13,11 +13,29 @@
         android:padding="10dp"
         android:src="@drawable/circle" />
 
-    <TextView
-        android:id="@+id/display_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:text="TextView" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_heightPercent="50%"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Text view" />
+
+        <TextView
+            android:id="@+id/last_message"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="asdfasdfasdfsdafasdfa
+            sd daf;las'ld; d;al''dsl;f;'asdlf'sadl;f s'd;laf 'sd;fl asd;fsadfasdfasdfasdf"
+            app:layout_heightPercent="50%" />
+    </LinearLayout>
+
 </LinearLayout>

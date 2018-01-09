@@ -43,6 +43,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
     private long start;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private History history;
+    private final int GET_HISTORY_DATA = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +78,12 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     }
 
-
     private void getHistory() {
         History history = mPubnub_DataStream.history();
         if (start != 0)
             history.start(start);
         history.channel(person.channel)
-                .count(3)
+                .count(GET_HISTORY_DATA)
                 .includeTimetoken(true)
                 .async(new PNCallback<PNHistoryResult>() {
                     @Override
@@ -108,7 +108,6 @@ public class PubSubTabContentFragment extends AppCompatActivity {
                 });
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
     private void getPremissions() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {

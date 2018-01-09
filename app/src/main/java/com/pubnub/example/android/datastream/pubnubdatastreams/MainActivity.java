@@ -38,6 +38,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.Person;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PostVariables;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubListAdapter;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubPnCallback;
+import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubPojo;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.PubSubTabContentFragment;
 import com.pubnub.example.android.datastream.pubnubdatastreams.pubsub.Samples;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
     private AdapterPerson adbPerson;
     private LinearLayout linearLayout;
+    private PubSubPojo msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +123,16 @@ public class MainActivity extends AppCompatActivity {
         theChannel.add(PUBSUB_CHANNEL.get(0));
 //        myListItems.add(new Person("Ardit", "http://i.imgur.com/DvpvklR.png",theChannel.get(0)));
         myListItems = new Samples().getData(mUsername);
+        initPubNub();
         for (Person person : new Samples().getData(mUsername)) {
             subbscribechannel.add(person.channel);
         }
-        initPubNub();
         initChannels();
         listView = findViewById(R.id.chatDialogs);
         fillListView();
 
     }
+
 
     private void initSearchView() {
 
@@ -312,7 +315,6 @@ public class MainActivity extends AppCompatActivity {
                 if (status.isError()) {
                     return;
                 }
-
                 try {
                     Log.v(TAG, JsonUtil.asJson(result));
 

@@ -8,13 +8,19 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class PubSubPojo {
+    public static final int TYPE_STRING = 0;
+    public static final int TYPE_IMAGE = 1;
+    public static final int TYPE_FILE = 2;
+
     private final String sender;
     private final Object message;
     private final String timestamp;
     private final String timestampOriginal;
     private DateTimeUtil dateTimeUtil;
+
 
     public PubSubPojo(@JsonProperty("sender") String sender, @JsonProperty("message") Object message, @JsonProperty("timestamp") String timestamp) {
         this.sender = sender;
@@ -34,6 +40,16 @@ public class PubSubPojo {
 
     public String getTimestampOriginal() {
         return timestampOriginal;
+    }
+
+    public int getTypeOfmessage() {
+        if (this.message instanceof ArrayList) {
+            if (((ArrayList) message).get(0).equals("isphoto"))
+                return TYPE_STRING;
+            if (((ArrayList) message).get(0).equals("isfile"))
+                return TYPE_FILE;
+        }
+        return TYPE_STRING;
     }
 
     public String sendMessage() {
@@ -75,6 +91,14 @@ public class PubSubPojo {
         return Objects.equal(this.sender, other.sender)
                 && Objects.equal(this.message, other.message)
                 && Objects.equal(this.timestamp, other.timestamp);
+    }
+
+    public String getMessageFromType() {
+        if (getTypeOfmessage() == PubSubPojo.TYPE_IMAGE)
+            return "Image";
+        else if (getTypeOfmessage() == PubSubPojo.TYPE_FILE)
+            return "File";
+        else return getMessage().toString();
     }
 
     @Override

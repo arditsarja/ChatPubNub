@@ -8,6 +8,7 @@
         android:id="@+id/outgoing_layout_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="100dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
@@ -23,22 +24,14 @@
                 android:id="@+id/sender"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:visibility="invisible"/>
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/timestamp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="6dp"
                 android:text="11:15 PM"
                 style="@style/chat_timings"/>
-
-            <!--<ImageView-->
-                <!--android:id="@+id/user_reply_status"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--android:paddingBottom="3dp"-->
-                <!--android:src="@drawable/message_got_receipt_from_server"/>-->
 
         </LinearLayout>
 
@@ -64,149 +57,3 @@
     </FrameLayout>
 
 </RelativeLayout>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent" android:layout_height="match_parent"-->
-    <!--android:id="@+id/layoutContainer" android:orientation="horizontal">-->
-    <!--<RelativeLayout-->
-        <!--android:layout_width="0dip"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="0.25">-->
-    <!--</RelativeLayout>-->
-
-    <!--<RelativeLayout-->
-        <!--android:layout_width="0dip"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="0.75">-->
-
-        <!--&lt;!&ndash; This is the part that's 70% of the total width. I'm inserting a LinearLayout and buttons.&ndash;&gt;-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:orientation="vertical">-->
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:orientation="horizontal">-->
-            <!--<LinearLayout-->
-                <!--android:id="@+id/linearLayout2"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:background="@drawable/balloon_outgoing_normal"-->
-
-                <!--android:orientation="vertical">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/message"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:background="@drawable/text_view"-->
-                    <!--android:text="@string/text_bubble"-->
-                    <!--android:textSize="26sp" />-->
-
-
-                <!--<TextView-->
-                    <!--android:id="@+id/sender"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginEnd="18dp"-->
-                    <!--android:background="@drawable/text_view"-->
-                    <!--android:text="Remote Device UUID"-->
-                    <!--android:textSize="10sp"-->
-                    <!--android:textStyle="bold" />-->
-            <!--</LinearLayout>-->
-
-            <!--</RelativeLayout>-->
-            <!--&lt;!&ndash;</com.github.library.bubbleview.BubbleLinearLayout>&ndash;&gt;-->
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:paddingBottom="6dp"-->
-                <!--android:paddingLeft="2dp"-->
-                <!--android:paddingRight="2dp"-->
-                <!--android:paddingTop="2dp">-->
-
-
-                <!--<TextView-->
-                    <!--android:id="@+id/timestamp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:background="@drawable/text_view"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="20160601T110000.000Z"-->
-                    <!--android:textSize="10sp" />-->
-
-            <!--</RelativeLayout>-->
-
-        <!--</LinearLayout>-->
-
-    <!--</RelativeLayout>-->
-
-<!--</LinearLayout>-->
-    <!--<com.github.library.bubbleview.BubbleTextView-->
-
-    <!--android:id="@+id/message"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:text="is is a sample real-time message from the data stream netw"-->
-    <!--android:textAppearance="@style/messageStyle"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="26sp"-->
-    <!--app:angle="8dp"-->
-    <!--app:arrowCenter="true"-->
-    <!--app:arrowHeight="5dp"-->
-    <!--app:arrowLocation="right"-->
-    <!--app:arrowPosition="3dp"-->
-    <!--app:arrowWidth="8dp"-->
-    <!--app:bubbleColor="#50dc3a"-->
-
-    <!--/>-->
-
-    <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/sender"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="Remote Device UUID"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textStyle="bold" />&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/timestamp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentEnd="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:gravity="end"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="20160601T110000.000Z"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="10sp" />&ndash;&gt;-->
-    <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
-    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-
-    <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
-
-

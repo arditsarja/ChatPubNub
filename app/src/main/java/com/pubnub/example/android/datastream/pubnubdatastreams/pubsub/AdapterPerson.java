@@ -51,6 +51,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
     public static class ViewHolder {
         public ImageView display_image;
         public TextView display_name;
+        public TextView last_message;
 
     }
 
@@ -64,6 +65,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
                 holder.display_image = (ImageView) vi.findViewById(R.id.display_image);
                 holder.display_name = (TextView) vi.findViewById(R.id.display_name);
+                holder.last_message = (TextView) vi.findViewById(R.id.last_message);
 
 
                 vi.setTag(holder);
@@ -77,6 +79,8 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                     .transform(new CircleTransform())
                     .into(holder.display_image);
             holder.display_name.setText(lPerson.get(position).name);
+//            holder.last_message.setText(lPerson.get(position).lastMessage);
+            holder.last_message.setText("test");
 
 
         } catch (Exception e) {
