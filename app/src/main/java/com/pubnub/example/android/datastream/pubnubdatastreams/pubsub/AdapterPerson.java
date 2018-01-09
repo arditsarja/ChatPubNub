@@ -33,6 +33,10 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         }
     }
 
+    public ArrayList<Person> getlPerson() {
+        return lPerson;
+    }
+
     public AdapterPerson(Activity activity, int textViewResourceId, ArrayList<Person> _lPerson) {
         super(activity, textViewResourceId, _lPerson);
         try {

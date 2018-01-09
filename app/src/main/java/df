@@ -1,0 +1,9 @@
+message.put("id","id");
+message.put("uniqueId","uniqueId");
+message.put("message","message");
+message.put("messageType","messageType");
+message.put("sender","sender");
+message.put("channel","channel");
+message.put("sendDate","sendDate");
+message.put("receiveDate","receiveDate");
+message.put("timestamp","sendDate");

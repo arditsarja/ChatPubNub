@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
             lstFound = myListItems;
         }
 
-        adbPerson = new AdapterPerson(MainActivity.this, 0);
+        adbPerson = new AdapterPerson(MainActivity.this, 0,lstFound);
 
 //        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
         listView.setAdapter(adbPerson);
@@ -228,8 +228,8 @@ public class MainActivity extends AppCompatActivity {
                 startChat(position);
             }
         });
-        for (int i = 0; i < lstFound.size(); i++) {
-            history(lstFound.get(i).channel, i);
+        for (int i = 0; i < adbPerson.getlPerson().size(); i++) {
+            history(adbPerson.getlPerson().get(i).channel, i);
         }
     }
 
