@@ -28,10 +28,12 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
+
     public void addFormServer(PubSubPojo message) {
 
-        if ((message.getSender().equals(PostVariables.person.name))||(message.getSender().equals(PostVariables.mUsername)))
-            this.values.add(0,message);
+        if ((message.getChannel().equals(PostVariables.person.channel)) || (message.getSender().equals(PostVariables.person.name)))
+//        if ((message.getChannel().equals(PostVariables.person.channel)))
+            this.values.add(0, message);
 
         ((Activity) this.context).runOnUiThread(new Runnable() {
             @Override
@@ -44,8 +46,9 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
     @Override
     public void add(PubSubPojo message) {
 //        this.values.add(0, message);
-        if ((message.getSender().equals(PostVariables.person.name))||(message.getSender().equals(PostVariables.mUsername)))
-        this.values.add(message);
+        if ((message.getChannel().equals(PostVariables.person.channel)) || (message.getSender().equals(PostVariables.person.name)))
+//        if ((message.getChannel().equals(PostVariables.person.channel)))
+            this.values.add(message);
 
         ((Activity) this.context).runOnUiThread(new Runnable() {
             @Override
@@ -71,8 +74,8 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             newLine = "\n";
         }
 
-        if ((!dsMsg.getSender().equals(PostVariables.person.name))&&(!dsMsg.getSender().equals(PostVariables.mUsername)))
-            convertView.setVisibility(View.GONE);
+//        if ((!dsMsg.getSender().equals(PostVariables.person.name)) && (!dsMsg.getSender().equals(PostVariables.mUsername)))
+//            convertView.setVisibility(View.GONE);
 
         msgView = new PubSubListRowUi();
         msgView.sender = (TextView) convertView.findViewById(R.id.sender);
@@ -84,7 +87,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
         msgView.sender.setText(dsMsg.getSender());
 
-        if (dsMsg.getMessageType().equals("photo")&& PostVariables.mUsername.equals(dsMsg.getSender())) {
+        if (dsMsg.getMessageType().equals("photo") && PostVariables.mUsername.equals(dsMsg.getSender())) {
             try {
                 Bitmap myBitmap = ImageLoader.init().from(dsMsg.getMessage()).requestSize(512, 512).getBitmap();
                 msgView.image.setImageBitmap(myBitmap);
@@ -93,7 +96,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
             msgView.image.setVisibility(View.VISIBLE);
             msgView.message.setText("");
         } else {
-            msgView.message.setText(newLine + dsMsg.getMessage() );
+            msgView.message.setText(newLine + dsMsg.getMessage());
             msgView.message.setVisibility(View.VISIBLE);
         }
         msgView.timestamp.setText(dsMsg.getTimestamp());

@@ -13,6 +13,7 @@ public class Person {
     public Person() {
     }
 
+
     public Person(String name, String image, String channel) {
         this.name = name;
         this.image = image;

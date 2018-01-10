@@ -13,6 +13,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 public class PubSubPnCallback extends SubscribeCallback {
     private static final String TAG = PubSubPnCallback.class.getName();
     private final PubSubListAdapter pubSubListAdapter;
+    private  AdapterPerson pubListAdapter;
 
     public PubSubPnCallback(PubSubListAdapter pubSubListAdapter) {
         this.pubSubListAdapter = pubSubListAdapter;
@@ -42,6 +43,7 @@ public class PubSubPnCallback extends SubscribeCallback {
             PubSubPojo dsMsg = JsonUtil.convert(jsonMsg, PubSubPojo.class);
 
             this.pubSubListAdapter.add(dsMsg);
+//            this.pubListAdapter.add();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,5 +52,9 @@ public class PubSubPnCallback extends SubscribeCallback {
     @Override
     public void presence(PubNub pubnub, PNPresenceEventResult presence) {
         // no presence handling for simplicity
+    }
+
+    public void setListChatAdapter(AdapterPerson adbPerson) {
+        pubListAdapter=adbPerson;
     }
 }

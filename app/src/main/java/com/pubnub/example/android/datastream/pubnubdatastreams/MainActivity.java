@@ -138,17 +138,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void fillListView(ArrayList<Person> lstFound) {
+        listView = findViewById(R.id.chatDialogs);
+        ArrayList<Person>listUsed=null;
+        if (lstFound != null) {
+            listUsed = new ArrayList<>(lstFound);
+        }
+        else
+            listUsed= new ArrayList<>(myListItems);
+        adbPerson = null;
+        adbPerson = new AdapterPerson(MainActivity.this, 0, listUsed);
+
+//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
+        listView.setAdapter(adbPerson);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startChat(position);
+            }
+        });
+        for (int i = 0; i < adbPerson.getlPerson().size(); i++) {
+            history(adbPerson.getlPerson().get(i).channel, i);
+        }
+        mPubSubPnCallback.setListChatAdapter(adbPerson);
+    }
+
     private void history(String channel, final int index) {
         mPubnub_DataStream.history().channel(channel).count(1).async(new PNCallback<PNHistoryResult>() {
             @Override
             public void onResponse(PNHistoryResult result, PNStatus status) {
                 if (!status.isError()) {
-
-
-                    PNHistoryItemResult itemResult = result.getMessages().get(0);
                     try {
+                        PNHistoryItemResult itemResult = result.getMessages().get(0);
                         msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
-                        Person person = myListItems.get(index);
+                        Person person = adbPerson.getlPerson().get(index);
                         person.lastMessage = msg.getMessageFromType();
                         adbPerson.update(person, index);
 //                        adbPerson.add(person);
@@ -209,28 +232,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillListView() {
         fillListView(null);
-    }
-
-    private void fillListView(ArrayList<Person> lstFound) {
-        listView = findViewById(R.id.chatDialogs);
-
-        if (lstFound == null) {
-            lstFound = myListItems;
-        }
-
-        adbPerson = new AdapterPerson(MainActivity.this, 0,lstFound);
-
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
-        listView.setAdapter(adbPerson);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startChat(position);
-            }
-        });
-        for (int i = 0; i < adbPerson.getlPerson().size(); i++) {
-            history(adbPerson.getlPerson().get(i).channel, i);
-        }
     }
 
     private void startChat(int postition) {
