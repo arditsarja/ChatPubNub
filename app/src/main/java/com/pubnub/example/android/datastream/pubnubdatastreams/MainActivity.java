@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isSearchOpened = false;
     private MaterialSearchView searchView;
-    private AdapterPerson adbPerson;
+    public static AdapterPerson adbPerson;
     private LinearLayout linearLayout;
     private PubSubPojo msg;
 

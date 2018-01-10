@@ -8,15 +8,17 @@ import com.pubnub.api.callbacks.SubscribeCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
 import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
+import com.pubnub.example.android.datastream.pubnubdatastreams.MainActivity;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
 public class PubSubPnCallback extends SubscribeCallback {
     private static final String TAG = PubSubPnCallback.class.getName();
     private final PubSubListAdapter pubSubListAdapter;
-    private  AdapterPerson pubListAdapter;
+
 
     public PubSubPnCallback(PubSubListAdapter pubSubListAdapter) {
         this.pubSubListAdapter = pubSubListAdapter;
+
     }
 
     @Override
@@ -41,7 +43,9 @@ public class PubSubPnCallback extends SubscribeCallback {
 
             JsonNode jsonMsg = message.getMessage();
             PubSubPojo dsMsg = JsonUtil.convert(jsonMsg, PubSubPojo.class);
-
+            Person person = MainActivity.adbPerson.getPersonFromchannel(dsMsg.getChannel());
+            person.lastMessage = dsMsg.getMessageFromType();
+            MainActivity.adbPerson.add(person);
             this.pubSubListAdapter.add(dsMsg);
 //            this.pubListAdapter.add();
         } catch (Exception e) {
@@ -55,6 +59,6 @@ public class PubSubPnCallback extends SubscribeCallback {
     }
 
     public void setListChatAdapter(AdapterPerson adbPerson) {
-        pubListAdapter=adbPerson;
+        adbPerson = adbPerson;
     }
 }

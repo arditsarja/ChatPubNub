@@ -39,6 +39,10 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         return lPerson;
     }
 
+    public Person getPersonFromchannel(String channel){
+        return lPerson.get(channel);
+    }
+
     public AdapterPerson(Activity activity, int textViewResourceId, Map<String,Person> _lPerson) {
         super(activity, textViewResourceId);
         try {
