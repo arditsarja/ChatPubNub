@@ -48,6 +48,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -60,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private static final List<String> MULTI_CHANNELS = Arrays.asList(Constants.MULTI_CHANNEL_NAMES.split(","));
     public static final List<String> PUBSUB_CHANNEL = Arrays.asList(Constants.CHANNEL_NAME.split(","));
-    private ArrayList<Person> myListItems = new ArrayList<Person>();
+    private Map<String,Person> myListItems = new HashMap<>();
     private ScheduledExecutorService mScheduleTaskExecutor;
-    private List<String> theChannel = new ArrayList<>();
+
     private List<String> subbscribechannel = new ArrayList<>();
 
     private PubNub mPubnub_DataStream;
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     private PNCallback<PNHistoryResult> hitoryResult;
     public static String mUsername;
     private Random random = new Random();
-    private String channel;
     public static SharedPreferences mSharedPrefs;
     private ListView listView;
 
@@ -120,16 +120,13 @@ public class MainActivity extends AppCompatActivity {
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         linearLayout = (LinearLayout) findViewById(R.id.toolbarLinearLayout);
         initSearchView();
-//        initChanelList();
-        theChannel.clear();
-        theChannel.add(PUBSUB_CHANNEL.get(0));
-//        myListItems.add(new Person("Ardit", "http://i.imgur.com/DvpvklR.png",theChannel.get(0)));
+
         myListItems = new Samples().getData(mUsername);
         initPubNub();
 
 
-        for (Person person : new Samples().getData(mUsername)) {
-            subbscribechannel.add(person.channel);
+        for (String channel : new Samples().getData(mUsername).keySet()) {
+            subbscribechannel.add(channel);
         }
         initChannels();
         listView = findViewById(R.id.chatDialogs);
@@ -138,18 +135,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void fillListView(ArrayList<Person> lstFound) {
+    private void fillListView(Map<String,Person> lstFound) {
         listView = findViewById(R.id.chatDialogs);
-        ArrayList<Person>listUsed=null;
+        Map<String,Person>listUsed=null;
         if (lstFound != null) {
-            listUsed = new ArrayList<>(lstFound);
+            listUsed = new HashMap<>(lstFound);
         }
         else
-            listUsed= new ArrayList<>(myListItems);
+            listUsed= new HashMap<>(myListItems);
         adbPerson = null;
-        adbPerson = new AdapterPerson(MainActivity.this, 0, listUsed);
-
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.select_dialog_item, theChannel);
+        adbPerson = new AdapterPerson(MainActivity.this, 0,listUsed);
+        for (String channel:adbPerson.getlPerson().keySet()) {
+            history(channel);
+        }
         listView.setAdapter(adbPerson);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -157,13 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 startChat(position);
             }
         });
-        for (int i = 0; i < adbPerson.getlPerson().size(); i++) {
-            history(adbPerson.getlPerson().get(i).channel, i);
-        }
-        mPubSubPnCallback.setListChatAdapter(adbPerson);
+
+
     }
 
-    private void history(String channel, final int index) {
+    private void history(final String channel) {
         mPubnub_DataStream.history().channel(channel).count(1).async(new PNCallback<PNHistoryResult>() {
             @Override
             public void onResponse(PNHistoryResult result, PNStatus status) {
@@ -171,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         PNHistoryItemResult itemResult = result.getMessages().get(0);
                         msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
-                        Person person = adbPerson.getlPerson().get(index);
+                        Person person = adbPerson.getlPerson().get(channel);
                         person.lastMessage = msg.getMessageFromType();
-                        adbPerson.update(person, index);
+                        adbPerson.add(person);
 //                        adbPerson.add(person);
 //                        myListItems.get(index).lastMessage=msg.getMessageFromType();
                         Log.v("History of Channel", itemResult.getEntry().toString());
@@ -213,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText != null && !newText.isEmpty()) {
-                    ArrayList<Person> lstFound = new ArrayList<>();
-                    for (Person item : myListItems) {
+                    Map<String,Person> lstFound = new HashMap();
+                    for (Person item : myListItems.values()) {
                         if (item.name.toLowerCase().contains(newText.toLowerCase()))
-                            lstFound.add(item);
+                            lstFound.put(item.channel,item);
                     }
                     fillListView(lstFound);
                 } else {
@@ -236,29 +232,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void startChat(int postition) {
 //        try {
-        List<String> chnannel = new ArrayList<>();
+
         Intent intent = new Intent(this, PubSubTabContentFragment.class);
         PostVariables.mPubSub = this.mPubSub;
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
-//            PostVariables.channel = this.theChannel.get(postition);
-        PostVariables.person = this.myListItems.get(postition);
-        chnannel.add(PostVariables.person.channel);
-
+        PostVariables.person = this.adbPerson.getItem(postition);
         startActivity(intent);
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
     }
 
-    public void openChat(View view) {
-        Intent intent = new Intent(this, PubSubTabContentFragment.class);
-        PostVariables.mPubSub = this.mPubSub;
-        PostVariables.mUsername = this.mUsername;
-        PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
-        PostVariables.channel = this.theChannel.get(0);
-        startActivity(intent);
-    }
 
     private void initChanelList() {
 
@@ -281,8 +266,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String strName = arrayAdapter.getItem(which);
-                theChannel.clear();
-                theChannel.add(strName);
+
 //                AlertDialog.Builder builderInner = new AlertDialog.Builder(MainActivity.this);
 //                builderInner.setMessage(strName);
 //                builderInner.setTitle("Your Selected Item is");
@@ -304,10 +288,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText mMessage = (EditText) MainActivity.this.findViewById(R.id.new_message);
 
         final Map<String, String> message = ImmutableMap.<String, String>of("sender", MainActivity.this.mUsername, "message", mMessage.getText().toString(), "timestamp", DateTimeUtil.getTimeStampUtc());
-
-//        MainActivity.this.mPubnub_DataStream.publish().channel(Constants.CHANNEL_NAME).message(message).async(
-        MainActivity.this.mPubnub_DataStream.publish().channel(theChannel.get(0)).message(message).async(
-
+        MainActivity.this.mPubnub_DataStream.publish().channel(Constants.CHANNEL_NAME).message(message).async(
                 new PNCallback<PNPublishResult>() {
                     @Override
                     public void onResponse(PNPublishResult result, PNStatus status) {

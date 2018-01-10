@@ -13,6 +13,8 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by User on 01/03/2018.
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 
 public class AdapterPerson extends ArrayAdapter<Person> {
     private Activity activity;
-    private ArrayList<Person> lPerson = new ArrayList<>();
+    private Map<String,Person> lPerson = new HashMap<>();
     private static LayoutInflater inflater = null;
 
     public AdapterPerson(Activity activity, int textViewResourceId) {
@@ -33,12 +35,12 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         }
     }
 
-    public ArrayList<Person> getlPerson() {
+    public Map<String,Person> getlPerson() {
         return lPerson;
     }
 
-    public AdapterPerson(Activity activity, int textViewResourceId, ArrayList<Person> _lPerson) {
-        super(activity, textViewResourceId, _lPerson);
+    public AdapterPerson(Activity activity, int textViewResourceId, Map<String,Person> _lPerson) {
+        super(activity, textViewResourceId);
         try {
             this.activity = activity;
             this.lPerson = _lPerson;
@@ -50,25 +52,12 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         }
     }
 
-    public void update(Person person, int index) {
-        if (lPerson.size() == index)
-            lPerson.add(person);
-        else
-            lPerson.set(index, person);
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-    }
 
 
     @Override
     public void add(Person person) {
 //        this.values.add(0, message);
-        lPerson.add(person);
+        lPerson.put(person.channel,person);
 
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -83,8 +72,8 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         return lPerson.size();
     }
 
-    public Person getItem(Person position) {
-        return position;
+    public Person getItem(int position) {
+        return  (Person) lPerson.values().toArray()[position];
     }
 
     public long getItemId(int position) {
@@ -101,6 +90,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
+        Person person = getItem(position);
         try {
             if (convertView == null) {
                 vi = inflater.inflate(R.layout.chat_layout, null);
@@ -117,12 +107,12 @@ public class AdapterPerson extends ArrayAdapter<Person> {
             }
 
             Picasso.with(getContext())
-                    .load(lPerson.get(position).image)
+                    .load(person.image)
                     .resize(150, 150)
                     .transform(new CircleTransform())
                     .into(holder.display_image);
-            holder.display_name.setText(lPerson.get(position).name);
-            holder.last_message.setText(lPerson.get(position).lastMessage);
+            holder.display_name.setText(person.name);
+            holder.last_message.setText(person.lastMessage);
 //            holder.last_message.setText("test");
 
 
