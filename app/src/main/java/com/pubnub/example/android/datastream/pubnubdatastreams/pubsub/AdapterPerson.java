@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ import java.util.Map;
 
 public class AdapterPerson extends ArrayAdapter<Person> {
     private Activity activity;
-    private Map<String,Person> lPerson = new HashMap<>();
+    private Map<String, Person> lPerson = new HashMap<>();
     private static LayoutInflater inflater = null;
 
     public AdapterPerson(Activity activity, int textViewResourceId) {
@@ -35,15 +34,15 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         }
     }
 
-    public Map<String,Person> getlPerson() {
+    public Map<String, Person> getlPerson() {
         return lPerson;
     }
 
-    public Person getPersonFromchannel(String channel){
+    public Person getPersonFromchannel(String channel) {
         return lPerson.get(channel);
     }
 
-    public AdapterPerson(Activity activity, int textViewResourceId, Map<String,Person> _lPerson) {
+    public AdapterPerson(Activity activity, int textViewResourceId, Map<String, Person> _lPerson) {
         super(activity, textViewResourceId);
         try {
             this.activity = activity;
@@ -56,13 +55,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         }
     }
 
-
-
-    @Override
-    public void add(Person person) {
-//        this.values.add(0, message);
-        lPerson.put(person.channel,person);
-
+    public void changeLayout() {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -71,13 +64,21 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         });
     }
 
+    @Override
+    public void add(Person person) {
+//        this.values.add(0, message);
+        lPerson.put(person.channel, person);
+        changeLayout();
+
+    }
+
 
     public int getCount() {
         return lPerson.size();
     }
 
     public Person getItem(int position) {
-        return  (Person) lPerson.values().toArray()[position];
+        return (Person) lPerson.values().toArray()[position];
     }
 
     public long getItemId(int position) {

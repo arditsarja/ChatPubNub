@@ -38,7 +38,7 @@ public class MultiPnCallback extends SubscribeCallback {
     @Override
     public void message(PubNub pubnub, PNMessageResult message) {
         try {
-            Log.v(TAG, "multi(" + JsonUtil.asJson(message) + ")");
+//            Log.v(TAG, "multi(" + JsonUtil.asJson(message) + ")");
 
             JsonNode jsonMsg = message.getMessage();
 

@@ -31,7 +31,7 @@ public class PresencePnCallback extends SubscribeCallback {
     @Override
     public void presence(PubNub pubnub, PNPresenceEventResult presence) {
         try {
-            Log.v(TAG, "presenceP(" + JsonUtil.asJson(presence) + ")");
+//            Log.v(TAG, "presenceP(" + JsonUtil.asJson(presence) + ")");
         } catch (Exception e) {
             e.printStackTrace();
         }
