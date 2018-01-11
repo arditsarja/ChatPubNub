@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:paddingLeft="15dp"
+            android:paddingTop="15dp"
             android:text="Rahul Agrawal is a good boy but he does not know what he wants." />
 
         <TextView

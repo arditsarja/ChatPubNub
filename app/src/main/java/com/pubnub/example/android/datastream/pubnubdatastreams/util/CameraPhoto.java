@@ -104,14 +104,11 @@ public class CameraPhoto {
 
     public ArrayList<String> getData() {
         ArrayList<String> result = new ArrayList<String>();
-        result.add("isphoto");
+        result.add("photo");
         result.add(getPhotoPath());
 //        result.add(convertFileToByteArrayString());
         return result;
     }
 
-    public String getDataString() {
-        return "isphotosplitlist"+ getPhotoPath()+"splitlist"+convertFileToByteArrayString();
-//        return "isphotosplitlist" + getPhotoPath();
-    }
+
 }

@@ -83,9 +83,9 @@ public class PubSubPojo {
 
     public int getTypeOfmessage() {
 
-        if ((messageType).equals("isphoto"))
-            return TYPE_STRING;
-        if ((messageType).equals("isfile"))
+        if ((messageType).equals("photo"))
+            return TYPE_IMAGE;
+        if ((messageType).equals("file"))
             return TYPE_FILE;
 
         return TYPE_STRING;

@@ -71,7 +71,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         else {
             convertView = inflater.inflate(R.layout.list_row_pubsub_recive, parent, false);
             newLine = "";
-            newLine = "\n";
+//            newLine = "\n";
         }
 
 //        if ((!dsMsg.getSender().equals(PostVariables.person.name)) && (!dsMsg.getSender().equals(PostVariables.mUsername)))

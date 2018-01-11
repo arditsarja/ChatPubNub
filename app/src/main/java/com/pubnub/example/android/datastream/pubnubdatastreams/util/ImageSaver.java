@@ -116,7 +116,7 @@ public class ImageSaver {
 //          setFileName(imageFileName).
 //          setDirectoryName("images").
 //          save(bitmapImage);
-//          return "isphoto"+imageFileName;
+//          return "photo"+imageFileName;
 //
 
 //      load image
