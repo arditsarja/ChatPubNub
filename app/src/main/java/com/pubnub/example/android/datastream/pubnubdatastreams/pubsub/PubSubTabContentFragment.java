@@ -66,7 +66,6 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         });
 
         cameraPhoto = new CameraPhoto(getApplicationContext());
-        getPremissions();
         ImageView imageView = findViewById(R.id.circleImage);
         TextView textView = findViewById(R.id.contactName);
         textView.setText(person.name);
@@ -110,26 +109,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getPremissions() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                        0);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        1);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        2);
-            }
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

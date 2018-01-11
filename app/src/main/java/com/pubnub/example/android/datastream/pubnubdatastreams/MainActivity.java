@@ -3,8 +3,11 @@ package com.pubnub.example.android.datastream.pubnubdatastreams;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private static final List<String> MULTI_CHANNELS = Arrays.asList(Constants.MULTI_CHANNEL_NAMES.split(","));
     public static final List<String> PUBSUB_CHANNEL = Arrays.asList(Constants.CHANNEL_NAME.split(","));
-    private Map<String,Person> myListItems = new HashMap<>();
+    private Map<String, Person> myListItems = new HashMap<>();
     private ScheduledExecutorService mScheduleTaskExecutor;
 
     private List<String> subbscribechannel = new ArrayList<>();
@@ -131,21 +134,20 @@ public class MainActivity extends AppCompatActivity {
         initChannels();
         listView = findViewById(R.id.chatDialogs);
         fillListView();
-
+        getPremissions();
     }
 
 
-    private void fillListView(Map<String,Person> lstFound) {
+    private void fillListView(Map<String, Person> lstFound) {
         listView = findViewById(R.id.chatDialogs);
-        Map<String,Person>listUsed=null;
+        Map<String, Person> listUsed = null;
         if (lstFound != null) {
             listUsed = new HashMap<>(lstFound);
-        }
-        else
-            listUsed= new HashMap<>(myListItems);
+        } else
+            listUsed = new HashMap<>(myListItems);
         adbPerson = null;
-        adbPerson = new AdapterPerson(MainActivity.this, 0,listUsed);
-        for (String channel:adbPerson.getlPerson().keySet()) {
+        adbPerson = new AdapterPerson(MainActivity.this, 0, listUsed);
+        for (String channel : adbPerson.getlPerson().keySet()) {
             history(channel);
         }
         listView.setAdapter(adbPerson);
@@ -209,10 +211,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText != null && !newText.isEmpty()) {
-                    Map<String,Person> lstFound = new HashMap();
+                    Map<String, Person> lstFound = new HashMap();
                     for (Person item : myListItems.values()) {
                         if (item.name.toLowerCase().contains(newText.toLowerCase()))
-                            lstFound.put(item.channel,item);
+                            lstFound.put(item.channel, item);
                     }
                     fillListView(lstFound);
                 } else {
@@ -458,4 +460,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void getPremissions() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+                        0);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        2);
+            }
+        }
+    }
 }
