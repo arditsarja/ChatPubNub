@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         PNHistoryItemResult itemResult = result.getMessages().get(0);
                         msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
                         Person person = adbPerson.getlPerson().get(channel);
-                        person.lastMessage = msg.getMessageFromType();
+                        person.setlastMessage(msg.getMessageFromType());
                         adbPerson.add(person);
 //                        adbPerson.add(person);
 //                        myListItems.get(index).lastMessage=msg.getMessageFromType();

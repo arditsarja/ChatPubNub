@@ -2,6 +2,7 @@ package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
     private Activity activity;
     private Map<String, Person> lPerson = new HashMap<>();
     private static LayoutInflater inflater = null;
+
 
     public AdapterPerson(Activity activity, int textViewResourceId) {
         super(activity, textViewResourceId);
@@ -72,7 +74,6 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
     }
 
-
     public int getCount() {
         return lPerson.size();
     }
@@ -118,6 +119,11 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                     .into(holder.display_image);
             holder.display_name.setText(person.name);
             holder.last_message.setText(person.lastMessage);
+            if (person.newMessage) {
+                holder.last_message.setTypeface(holder.last_message.getTypeface(), Typeface.BOLD);
+                person.newMessage = false;
+            }
+
 //            holder.last_message.setText("test");
 
 

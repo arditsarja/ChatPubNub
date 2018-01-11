@@ -44,7 +44,7 @@ public class PubSubPnCallback extends SubscribeCallback {
             JsonNode jsonMsg = message.getMessage();
             PubSubPojo dsMsg = JsonUtil.convert(jsonMsg, PubSubPojo.class);
             Person person = MainActivity.adbPerson.getPersonFromchannel(dsMsg.getChannel());
-            person.lastMessage = dsMsg.getMessageFromType();
+            person.setlastMessage(dsMsg.getMessageFromType(),true);
             MainActivity.adbPerson.add(person);
             this.pubSubListAdapter.add(dsMsg);
 //            this.pubListAdapter.add();
