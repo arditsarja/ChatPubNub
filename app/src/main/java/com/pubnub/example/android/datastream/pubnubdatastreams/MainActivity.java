@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(Person.alldata==null)
+            Person.alldata=Samples.elements;
+
         if (mSharedPrefs == null) {
             mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
             if (!mSharedPrefs.contains(Constants.DATASTREAM_UUID)) {
@@ -124,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.toolbarLinearLayout);
         initSearchView();
 
-        myListItems = new Samples().getData(mUsername);
+        myListItems = Person.alldata.get(mUsername);
         initPubNub();
 
 
-        for (String channel : new Samples().getData(mUsername).keySet()) {
+        for (String channel : Person.alldata.get(mUsername).keySet()) {
             subbscribechannel.add(channel);
         }
         initChannels();
@@ -169,11 +173,17 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         PNHistoryItemResult itemResult = result.getMessages().get(0);
                         msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
-                        Person person = adbPerson.getlPerson().get(channel);
-                        person.setlastMessage(msg.getMessageFromType());
-                        adbPerson.add(person);
+
+                        Person.alldata.get(mUsername).get(channel).setlastMessage(msg.getMessageFromType());
+                        adbPerson.add(Person.alldata.get(mUsername).get(channel));
+
+//                        Person person = adbPerson.getlPerson().get(channel);
+//                        person.setlastMessage(msg.getMessageFromType());
+//                        Person.alldata.get(mUsername).put(person.channel,person);
 //                        adbPerson.add(person);
-//                        myListItems.get(index).lastMessage=msg.getMessageFromType();
+
+
+
                         Log.v("History of Channel", itemResult.getEntry().toString());
                         Log.v("History of Channel", itemResult.getEntry().get("message").toString());
                         Log.v("History of Channel", itemResult.getEntry().get("message").asText());
@@ -240,6 +250,8 @@ public class MainActivity extends AppCompatActivity {
         PostVariables.mUsername = this.mUsername;
         PostVariables.mPubnub_DataStream = this.mPubnub_DataStream;
         PostVariables.person = this.adbPerson.getItem(postition);
+        Person.alldata.get(mUsername).get(PostVariables.person.channel).setReadMessage();
+        this.adbPerson.getlPerson().get(PostVariables.person.channel).setReadMessage();
         startActivity(intent);
 //        }catch (Exception e){
 //            e.printStackTrace();
@@ -481,3 +493,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

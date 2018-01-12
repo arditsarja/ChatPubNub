@@ -15,7 +15,6 @@ public class PubSubPnCallback extends SubscribeCallback {
     private static final String TAG = PubSubPnCallback.class.getName();
     private final PubSubListAdapter pubSubListAdapter;
 
-
     public PubSubPnCallback(PubSubListAdapter pubSubListAdapter) {
         this.pubSubListAdapter = pubSubListAdapter;
 
@@ -39,13 +38,20 @@ public class PubSubPnCallback extends SubscribeCallback {
     @Override
     public void message(PubNub pubnub, PNMessageResult message) {
         try {
-            Log.v(TAG, "message(" + JsonUtil.asJson(message) + ")");
-
+            if(PostVariables.lastMessage.equals("" + JsonUtil.asJson(message)))
+                return;
+            Log.v(TAG, "messagenumber1(" + JsonUtil.asJson(message) + ")");
+            PostVariables.lastMessage="" + JsonUtil.asJson(message);
             JsonNode jsonMsg = message.getMessage();
             PubSubPojo dsMsg = JsonUtil.convert(jsonMsg, PubSubPojo.class);
-            Person person = MainActivity.adbPerson.getPersonFromchannel(dsMsg.getChannel());
-            person.setlastMessage(dsMsg.getMessageFromType(),true);
+            boolean newMessage = false;
+            if (!MainActivity.mUsername.equals(dsMsg.getSender()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
+                newMessage = true;
+//            person.setlastMessage(dsMsg.getMessageFromType(),true);
+            Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setlastMessage(dsMsg.getMessageFromType(), newMessage);
+            Person person = Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel());
             MainActivity.adbPerson.add(person);
+            if(PostVariables.person!=null)
             this.pubSubListAdapter.add(dsMsg);
 //            this.pubListAdapter.add();
         } catch (Exception e) {

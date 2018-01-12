@@ -13,4 +13,5 @@ public class PostVariables {
     public static PubNub mPubnub_DataStream;
     public static String channel;
     public static Person person;
+    public static String lastMessage = "";
 }

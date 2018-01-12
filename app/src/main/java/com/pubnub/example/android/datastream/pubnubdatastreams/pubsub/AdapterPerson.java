@@ -90,6 +90,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         public ImageView display_image;
         public TextView display_name;
         public TextView last_message;
+        public TextView number_of_new_messages;
 
     }
 
@@ -105,6 +106,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                 holder.display_image = (ImageView) vi.findViewById(R.id.display_image);
                 holder.display_name = (TextView) vi.findViewById(R.id.display_name);
                 holder.last_message = (TextView) vi.findViewById(R.id.last_message);
+                holder.number_of_new_messages = (TextView) vi.findViewById(R.id.number_of_new_messages);
 
 
                 vi.setTag(holder);
@@ -119,13 +121,11 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                     .into(holder.display_image);
             holder.display_name.setText(person.name);
             holder.last_message.setText(person.lastMessage);
+            holder.number_of_new_messages.setText("" + person.numberOfnewMessage);
             if (person.newMessage) {
                 holder.last_message.setTypeface(holder.last_message.getTypeface(), Typeface.BOLD);
-                person.newMessage = false;
+                holder.number_of_new_messages.setVisibility(View.VISIBLE);
             }
-
-//            holder.last_message.setText("test");
-
 
         } catch (Exception e) {
 

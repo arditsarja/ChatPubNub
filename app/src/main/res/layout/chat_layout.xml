@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,25 +17,69 @@
         android:layout_height="80dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_heightPercent="50%"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Text view" />
+        <FrameLayout
 
-        <TextView
-            android:id="@+id/last_message"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:padding="10dp"
-            android:text="asdfasdfasdfsdafasdfa sd daf;las'ld; d;al''dsl;f;'asdlf'sadl;f s'd;laf 'sd;fl asd;fsadfasdfasdfasdf"
-            app:layout_heightPercent="50%" />
+            android:paddingRight="10dp"
+            app:layout_heightPercent="50%">
+
+            <TextView
+                android:id="@+id/display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:text="Text view" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:layout_weight="1"
+                android:padding="10dp"
+
+                android:text="01.05.2018" />
+        </FrameLayout>
+
+        <FrameLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingRight="10dp"
+            app:layout_heightPercent="50%">
+
+            <TextView
+                android:id="@+id/last_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="asdfasdfasd d;afasd df dfsfasdfasdf sdf sdf sdf sdf sdf sdf sdf "
+                app:layout_heightPercent="50%" />
+
+            <TextView
+                android:id="@+id/number_of_new_messages"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_weight="1"
+                android:background="@drawable/circle_new_message"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                />
+
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>
