@@ -46,10 +46,13 @@ public class PubSubPnCallback extends SubscribeCallback {
                 boolean newMessage = false;
                 if (!MainActivity.mUsername.equals(dsMsg.getSender()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
                     newMessage = true;
-
-                Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setlastMessage(dsMsg.getMessageFromType(), newMessage);
-                Person person = Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel());
-                MainActivity.adbPerson.add(person);
+                try {
+                    Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setlastMessage(dsMsg.getMessageFromType(), newMessage);
+                    Person person = Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel());
+                    MainActivity.adbPerson.add(person);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             if (PostVariables.person != null)
                 this.pubSubListAdapter.add(dsMsg);

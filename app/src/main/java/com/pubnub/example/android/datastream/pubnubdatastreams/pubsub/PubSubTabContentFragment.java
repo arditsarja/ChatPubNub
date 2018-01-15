@@ -83,7 +83,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         if (start != 0)
             history.start(start);
         history.channel(person.channel)
-                .count(GET_HISTORY_DATA)
+                .count(GET_HISTORY_DATA*2)
                 .includeTimetoken(true)
                 .async(new PNCallback<PNHistoryResult>() {
                     @Override
@@ -95,16 +95,16 @@ public class PubSubTabContentFragment extends AppCompatActivity {
                                 try {
                                     PubSubPojo msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
                                     psAdapter.addFormServer(msg);
-                                    if (i == 0)
-                                        start = result.getMessages().get(i).getTimetoken();
+
                                     Log.v("History of Channel", itemResult.getEntry().toString());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                if (i == 0)
+                                    start = result.getMessages().get(i).getTimetoken();
                             }
 
-                        }
-                    }
+                        }}
                 });
         mSwipeRefreshLayout.setRefreshing(false);
     }

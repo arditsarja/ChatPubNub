@@ -1,5 +1,7 @@
 package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
+import android.support.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -16,10 +18,11 @@ public class PubSubPojo {
     private final String message;
     private final String messageType;
     private final String sender;
-    private final String channel;
+    private String channel;
     private final String sendDate;
     private final String receiveDate;
     private final String timestamp;
+    private String lastSeen;
 
     private DateTimeUtil dateTimeUtil;
 
@@ -31,18 +34,21 @@ public class PubSubPojo {
                       @JsonProperty("sender") String sender,
                       @JsonProperty("channel") String channel,
                       @JsonProperty("sendDate") String sendDate,
-                      @JsonProperty("receiveDate") String receiveDate) {
-        this.id = id!=null?id:"";
-        this.uniqueId = uniqueId!=null?uniqueId:"";
-        this.message = message!=null?message:"";
-        this.messageType = messageType!=null?messageType:"";
-        this.sender = sender!=null?sender:"";
-        this.channel = channel!=null?channel:"";
-        this.sendDate = sendDate!=null?sendDate:"";
-        this.receiveDate = receiveDate!=null?receiveDate:"";
-        this.timestamp = sendDate!=null?sendDate:"";
+                      @JsonProperty("receiveDate") String receiveDate,
+                      @JsonProperty("lastSeen") String lastSeen) {
+        this.id = id != null ? id : "";
+        this.uniqueId = uniqueId != null ? uniqueId : "";
+        this.message = message != null ? message : "";
+        this.messageType = messageType != null ? messageType : "";
+        this.sender = sender != null ? sender : "";
+        this.channel = channel != null ? channel : "";
+        this.sendDate = sendDate != null ? sendDate : "";
+        this.receiveDate = receiveDate != null ? receiveDate : "";
+        this.timestamp = sendDate != null ? sendDate : "";
+        this.lastSeen = lastSeen != null ? lastSeen : "false";
 
     }
+
 
     public String getId() {
         return id;
@@ -66,6 +72,17 @@ public class PubSubPojo {
 
     public String getChannel() {
         return channel;
+    }
+
+    public void setChannel() {
+        if (this.channel.contains("-receipts")) {
+            String channel = this.channel.replace("-receipts", "");
+            this.channel = channel;
+        }
+    }
+
+    public String getLastSeen() {
+        return lastSeen;
     }
 
     public String getSendDate() {
@@ -134,5 +151,9 @@ public class PubSubPojo {
                 .add("message", message)
                 .add("timestamp", timestamp)
                 .toString();
+    }
+
+    public void setLastSeen() {
+        this.lastSeen = this.uniqueId;
     }
 }

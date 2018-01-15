@@ -25,6 +25,12 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:visibility="gone"/>
+            <ImageView
+                android:id="@+id/seen"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_seen"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/timestamp"
                 android:layout_height="wrap_content"

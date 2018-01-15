@@ -10,4 +10,5 @@ public class PubSubListRowUi {
     public TextView message;
     public ImageView image;
     public TextView timestamp;
+    public ImageView seen;
 }
