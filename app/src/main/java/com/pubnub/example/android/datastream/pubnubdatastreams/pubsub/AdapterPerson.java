@@ -105,7 +105,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
         Person person = getItem(position);
         try {
-            if (convertView == null) {
+//            if (convertView == null) {
                 vi = inflater.inflate(R.layout.chat_layout, null);
                 holder = new ViewHolder();
 
@@ -118,9 +118,9 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
 
                 vi.setTag(holder);
-            } else {
-                holder = (ViewHolder) vi.getTag();
-            }
+//            } else {
+//                holder = (ViewHolder) vi.getTag();
+//            }
 
             Picasso.with(getContext())
                     .load(person.image)
@@ -137,12 +137,10 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                 holder.date_stamp.setTypeface(holder.date_stamp.getTypeface(), Typeface.BOLD);
                 holder.number_of_new_messages.setVisibility(View.VISIBLE);
             }
-            if(person.seen){
+
+            if(person.seen) {
                 holder.seen.setVisibility(View.VISIBLE);
-                holder.last_message.setPadding(padingleft,0,dpAsPixels,dpAsPixels);
-            }else{
-                holder.seen.setVisibility(View.GONE);
-                holder.last_message.setPadding(dpAsPixels,0,dpAsPixels,dpAsPixels);
+                holder.last_message.setPadding(padingleft, 0, dpAsPixels, dpAsPixels);
             }
 
 
