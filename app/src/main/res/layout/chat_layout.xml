@@ -32,10 +32,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:textSize="15sp"
                 android:padding="10dp"
-                android:textStyle="bold"
-                android:text="Text view" />
+                android:text="Text view"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date"
@@ -44,8 +44,9 @@
                 android:layout_gravity="center_vertical|end"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:text="01.05.2018"
 
-                android:text="01.05.2018" />
+                android:textSize="18sp" />
         </FrameLayout>
 
         <FrameLayout
@@ -56,35 +57,43 @@
             android:layout_weight="1"
             android:paddingRight="10dp"
             app:layout_heightPercent="50%">
+
             <ImageView
                 android:id="@+id/seen"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@drawable/ic_seen"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|left"
-                android:visibility="gone"/>
+                android:paddingBottom="10dp"
+                android:src="@drawable/ic_seen"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/last_message"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:padding="10dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:text="asdfasdfasd d;afasd df dfsfasdfasdf sdf sdf sdf sdf sdf sdf sdf "
+                android:textSize="18sp"
                 app:layout_heightPercent="50%" />
 
             <TextView
                 android:id="@+id/number_of_new_messages"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical|end"
                 android:layout_weight="1"
                 android:background="@drawable/circle_new_message"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@color/white"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </FrameLayout>
     </LinearLayout>

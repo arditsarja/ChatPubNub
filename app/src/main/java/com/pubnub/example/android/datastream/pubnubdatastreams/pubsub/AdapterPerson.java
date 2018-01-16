@@ -139,10 +139,10 @@ public class AdapterPerson extends ArrayAdapter<Person> {
             }
             if(person.seen){
                 holder.seen.setVisibility(View.VISIBLE);
-                holder.last_message.setPadding(padingleft,dpAsPixels,dpAsPixels,dpAsPixels);
+                holder.last_message.setPadding(padingleft,0,dpAsPixels,dpAsPixels);
             }else{
                 holder.seen.setVisibility(View.GONE);
-                holder.last_message.setPadding(dpAsPixels,dpAsPixels,dpAsPixels,dpAsPixels);
+                holder.last_message.setPadding(dpAsPixels,0,dpAsPixels,dpAsPixels);
             }
 
 
