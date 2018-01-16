@@ -91,12 +91,18 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         public TextView display_name;
         public TextView last_message;
         public TextView number_of_new_messages;
-
+        public TextView date_stamp;
+        public ImageView seen;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
+        float scale = activity.getBaseContext().getResources().getDisplayMetrics().density;
+        //10 dp in pixels
+        int dpAsPixels = (int) (10*scale + 0.5f);
+        int padingleft = (int) (25*scale + 0.5f);
+
         Person person = getItem(position);
         try {
             if (convertView == null) {
@@ -105,8 +111,10 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 
                 holder.display_image = (ImageView) vi.findViewById(R.id.display_image);
                 holder.display_name = (TextView) vi.findViewById(R.id.display_name);
+                holder.date_stamp = (TextView) vi.findViewById(R.id.date);
                 holder.last_message = (TextView) vi.findViewById(R.id.last_message);
                 holder.number_of_new_messages = (TextView) vi.findViewById(R.id.number_of_new_messages);
+                holder.seen = (ImageView) vi.findViewById(R.id.seen);
 
 
                 vi.setTag(holder);
@@ -120,12 +128,23 @@ public class AdapterPerson extends ArrayAdapter<Person> {
                     .transform(new CircleTransform())
                     .into(holder.display_image);
             holder.display_name.setText(person.name);
+            holder.date_stamp.setText(person.getDateStamp());
             holder.last_message.setText(person.lastMessage);
             holder.number_of_new_messages.setText("" + person.numberOfnewMessage);
             if (person.newMessage) {
+                person.seen=false;
                 holder.last_message.setTypeface(holder.last_message.getTypeface(), Typeface.BOLD);
+                holder.date_stamp.setTypeface(holder.date_stamp.getTypeface(), Typeface.BOLD);
                 holder.number_of_new_messages.setVisibility(View.VISIBLE);
             }
+            if(person.seen){
+                holder.seen.setVisibility(View.VISIBLE);
+                holder.last_message.setPadding(padingleft,dpAsPixels,dpAsPixels,dpAsPixels);
+            }else{
+                holder.seen.setVisibility(View.GONE);
+                holder.last_message.setPadding(dpAsPixels,dpAsPixels,dpAsPixels,dpAsPixels);
+            }
+
 
         } catch (Exception e) {
 

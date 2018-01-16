@@ -56,7 +56,13 @@
             android:layout_weight="1"
             android:paddingRight="10dp"
             app:layout_heightPercent="50%">
-
+            <ImageView
+                android:id="@+id/seen"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_seen"
+                android:layout_gravity="center_vertical|left"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/last_message"
                 android:layout_width="match_parent"

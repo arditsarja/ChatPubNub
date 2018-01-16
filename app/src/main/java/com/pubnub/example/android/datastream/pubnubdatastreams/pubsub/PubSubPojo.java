@@ -112,6 +112,9 @@ public class PubSubPojo {
     public String getTimestamp() {
         return timestamp.substring(11, 16);
     }
+    public String getDatestamp() {
+        return timestamp.substring(0,10);
+    }
 
     @Override
     public boolean equals(Object obj) {

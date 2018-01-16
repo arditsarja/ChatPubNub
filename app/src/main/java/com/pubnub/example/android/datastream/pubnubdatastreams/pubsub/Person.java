@@ -14,8 +14,11 @@ public class Person {
     public String image;
     public String channel;
     public String lastMessage;
+    public String dateStamp;
     public boolean newMessage;
     public int numberOfnewMessage;
+    public boolean seen;
+
 
     public Person() {
     }
@@ -25,6 +28,14 @@ public class Person {
         this.name = name;
         this.image = image;
         this.channel = channel;
+    }
+
+    public String getDateStamp() {
+        return dateStamp;
+    }
+
+    public void setDateStamp(String dateStamp) {
+        this.dateStamp = dateStamp;
     }
 
     public void setlastMessage(String messageFromType, boolean newMessage) {
@@ -38,6 +49,10 @@ public class Person {
     public void setReadMessage() {
         newMessage = false;
         numberOfnewMessage = 0;
+    }
+
+    public void setSeen(boolean seen){
+        this.seen=seen;
     }
 
     public void setlastMessage(String messageFromType) {

@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(Person.alldata==null)
-            Person.alldata=Samples.elements;
+        if (Person.alldata == null)
+            Person.alldata = Samples.elements;
 
         if (mSharedPrefs == null) {
             mSharedPrefs = getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE);
@@ -173,20 +173,14 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         PNHistoryItemResult itemResult = result.getMessages().get(0);
                         msg = JsonUtil.convert(itemResult.getEntry(), PubSubPojo.class);
-
+                        boolean seen = false;
+                        if (msg.getSender().equals(mUsername) && msg.getLastSeen().equals(msg.getUniqueId()))
+                            seen = true;
+                        Person.alldata.get(mUsername).get(channel).setSeen(seen);
                         Person.alldata.get(mUsername).get(channel).setlastMessage(msg.getMessageFromType());
+                        Person.alldata.get(mUsername).get(channel).setDateStamp(msg.getDatestamp());
                         adbPerson.add(Person.alldata.get(mUsername).get(channel));
 
-//                        Person person = adbPerson.getlPerson().get(channel);
-//                        person.setlastMessage(msg.getMessageFromType());
-//                        Person.alldata.get(mUsername).put(person.channel,person);
-//                        adbPerson.add(person);
-
-
-
-                        Log.v("History of Channel", itemResult.getEntry().toString());
-                        Log.v("History of Channel", itemResult.getEntry().get("message").toString());
-                        Log.v("History of Channel", itemResult.getEntry().get("message").asText());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

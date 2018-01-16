@@ -44,10 +44,11 @@ public class PubSubPnCallback extends SubscribeCallback {
             if (!PostVariables.lastMessage.equals("" + JsonUtil.asJson(message))) {
                 PostVariables.lastMessage = "" + JsonUtil.asJson(message);
                 boolean newMessage = false;
-                if (!MainActivity.mUsername.equals(dsMsg.getSender()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
+                if (!MainActivity.mUsername.equals(dsMsg.getSender()) &&!dsMsg.getLastSeen().equals(dsMsg.getUniqueId()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
                     newMessage = true;
                 try {
                     Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setlastMessage(dsMsg.getMessageFromType(), newMessage);
+                    Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setDateStamp(dsMsg.getDatestamp());
                     Person person = Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel());
                     MainActivity.adbPerson.add(person);
                 } catch (Exception e) {
