@@ -1,5 +1,7 @@
 package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
+import com.pubnub.example.android.datastream.pubnubdatastreams.util.ImageProfile;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,12 +12,12 @@ import java.util.Map;
 public class Samples {
     public static Map<String, Map<String, Person>> data = new HashMap<>();
     public static Map<String, Map<String, Person>> elements = fill();
-    public String[] Ardit = {"Ardit", "https://blog.bufferapp.com/wp-content/uploads/2014/05/dreamstimefree_169606.jpg"};
-    public String[] Beni = {"Beni", "https://blog.bufferapp.com/wp-content/uploads/2014/05/1443725_58313555.jpg"};
-    public String[] Goni = {"Goni", "https://blog.bufferapp.com/wp-content/uploads/2014/05/1443725_58313555.jpg"};
-    public String[] Mira = {"Mira", "https://blog.bufferapp.com/wp-content/uploads/2014/05/6110974997_8b0dfa13a0_b.jpg"};
-    public String[] Tani = {"Tani", "https://blog.bufferapp.com/wp-content/uploads/2014/05/file0001897600074.jpg"};
-    public String[] Laert = {"Laert", "https://blog.bufferapp.com/wp-content/uploads/2014/05/6110974997_8b0dfa13a0_b.jpg"};
+    public String[] Ardit = {"Ardit", ImageProfile.URLS[0]};
+    public String[] Beni = {"Beni", ImageProfile.URLS[1]};
+    public String[] Goni = {"Goni", ImageProfile.URLS[2]};
+    public String[] Mira = {"Mira", ImageProfile.URLS[3]};
+    public String[] Tani = {"Tani", ImageProfile.URLS[4]};
+    public String[] Laert = {"Laert", ImageProfile.URLS[5]};
 
     public Map<String, Person> myListItems = new HashMap<>();
 
@@ -51,13 +53,13 @@ public class Samples {
     public static Map<String, Map<String, Person>> fill() {
         Map<String, Map<String, Person>> elements = new HashMap<>();
         Map<String, Person> myListItems = new HashMap<>();
-        String[] Ardit = {"Ardit", "https://blog.bufferapp.com/wp-content/uploads/2014/05/dreamstimefree_169606.jpg"};
-        String[] Endri = {"Endri", "https://blog.bufferapp.com/wp-content/uploads/2014/05/dreamstimefree_169606.jpg"};
-        String[] Beni = {"Beni", "https://blog.bufferapp.com/wp-content/uploads/2014/05/1443725_58313555.jpg"};
-        String[] Goni = {"Goni", "https://blog.bufferapp.com/wp-content/uploads/2014/05/1443725_58313555.jpg"};
-        String[] Mira = {"Mira", "https://blog.bufferapp.com/wp-content/uploads/2014/05/6110974997_8b0dfa13a0_b.jpg"};
-        String[] Tani = {"Tani", "https://blog.bufferapp.com/wp-content/uploads/2014/05/file0001897600074.jpg"};
-        String[] Laert = {"Laert", "https://blog.bufferapp.com/wp-content/uploads/2014/05/6110974997_8b0dfa13a0_b.jpg"};
+        String[] Ardit = {"Ardit", ImageProfile.URLS[0]};
+        String[] Beni = {"Beni", ImageProfile.URLS[1]};
+        String[] Goni = {"Goni", ImageProfile.URLS[2]};
+        String[] Mira = {"Mira", ImageProfile.URLS[3]};
+        String[] Tani = {"Tani", ImageProfile.URLS[4]};
+        String[] Laert = {"Laert", ImageProfile.URLS[5]};
+        String[] Endri = {"Laert", ImageProfile.URLS[6]};
         myListItems.put("0xAAAAAAAA", new Person(Beni[0], Beni[1], "0xAAAAAAAA"));
         myListItems.put("0xAAAAAAAB", new Person(Mira[0], Mira[1], "0xAAAAAAAB"));
         myListItems.put("0xAAAAAAAC", new Person(Tani[0], Tani[1], "0xAAAAAAAC"));
