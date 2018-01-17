@@ -119,7 +119,7 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
         if (dsMsg.getMessageType().equals("photo") && PostVariables.mUsername.equals(dsMsg.getSender())) {
             try {
-                LoadImage.loadImage(dsMsg.getMessage(), msgView.image, context);
+                LoadImage.loadImageInChat(dsMsg.getMessage(), msgView.image, context);
 //                Bitmap myBitmap = ImageLoader.init().from(dsMsg.getMessage()).requestSize(512, 512).getBitmap();
 //                msgView.image.setImageBitmap(myBitmap);
             } catch (Exception e) {
