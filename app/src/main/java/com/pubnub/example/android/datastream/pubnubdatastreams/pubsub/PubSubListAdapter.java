@@ -12,15 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kosalgeek.android.photoutil.ImageLoader;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
-import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
+import com.pubnub.example.android.datastream.pubnubdatastreams.util.LoadImage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,11 +64,11 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
     @Override
     public void add(PubSubPojo message) {
 //        this.values.add(0, message);
-        if(message.getChannel().contains("-receipts")) {
+        if (message.getChannel().contains("-receipts")) {
             String hi = message.getChannel();
         }
         message.setChannel();
-                if ((message.getChannel().equals(PostVariables.person.channel)) || (message.getSender().equals(PostVariables.person.name))) {
+        if ((message.getChannel().equals(PostVariables.person.channel)) || (message.getSender().equals(PostVariables.person.name))) {
 //        if ((message.getChannel().equals(PostVariables.person.channel)))
             if (values.indexOf(message) == -1)
                 this.values.add(message);
@@ -120,8 +119,9 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
 
         if (dsMsg.getMessageType().equals("photo") && PostVariables.mUsername.equals(dsMsg.getSender())) {
             try {
-                Bitmap myBitmap = ImageLoader.init().from(dsMsg.getMessage()).requestSize(512, 512).getBitmap();
-                msgView.image.setImageBitmap(myBitmap);
+                LoadImage.loadImage(dsMsg.getMessage(), msgView.image, context);
+//                Bitmap myBitmap = ImageLoader.init().from(dsMsg.getMessage()).requestSize(512, 512).getBitmap();
+//                msgView.image.setImageBitmap(myBitmap);
             } catch (Exception e) {
             }
             msgView.image.setVisibility(View.VISIBLE);
@@ -138,16 +138,16 @@ public class PubSubListAdapter extends ArrayAdapter<PubSubPojo> {
         if ((dsMsg.getLastSeen() == null || !dsMsg.getLastSeen().equals(dsMsg.getUniqueId())) && !dsMsg.getSender().equals(PostVariables.mUsername)) {
 
             dsMsg.setLastSeen();
-            Map<String, String> message =new HashMap<String,String>();
-            message.put("id",dsMsg.getId());
-            message.put("uniqueId",dsMsg.getUniqueId());
-            message.put("message",dsMsg.getMessage());
-            message.put("messageType",dsMsg.getMessageFromType());
-            message.put("sender",dsMsg.getSender());
-            message.put("channel",dsMsg.getChannel()+"-receipts");
+            Map<String, String> message = new HashMap<String, String>();
+            message.put("id", dsMsg.getId());
+            message.put("uniqueId", dsMsg.getUniqueId());
+            message.put("message", dsMsg.getMessage());
+            message.put("messageType", dsMsg.getMessageType());
+            message.put("sender", dsMsg.getSender());
+            message.put("channel", dsMsg.getChannel() + "-receipts");
             message.put("sendDate", dsMsg.getSendDate());
-            message.put("receiveDate",dsMsg.getReceiveDate());
-            message.put("lastSeen",dsMsg.getUniqueId());
+            message.put("receiveDate", dsMsg.getReceiveDate());
+            message.put("lastSeen", dsMsg.getUniqueId());
             PostVariables.mPubnub_DataStream.publish().channel(dsMsg.getChannel()).message(message).async(
                     new PNCallback<PNPublishResult>() {
                         @Override
