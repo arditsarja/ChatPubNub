@@ -13,18 +13,21 @@ import com.squareup.picasso.Picasso;
 
 public class LoadImage {
     public static void loadImageProfile(String image, ImageView imageView, Context applicationContext) {
+        loadImageProfile( image, 100,  imageView,  applicationContext);
+    }
+public static void loadImageProfile(String image,int size, ImageView imageView, Context applicationContext) {
         if (image == null)
             image = "";
         try {
             Picasso.with(applicationContext)
                     .load(image)
-                    .resize(100, 100)
+                    .resize(size, size)
                     .transform(new CircleTransform())
                     .into(imageView);
         } catch (Exception e) {
             Picasso.with(applicationContext)
                     .load(R.drawable.avatar)
-                    .resize(100, 100)
+                    .resize(size, size)
                     .transform(new CircleTransform())
                     .into(imageView);
         }
