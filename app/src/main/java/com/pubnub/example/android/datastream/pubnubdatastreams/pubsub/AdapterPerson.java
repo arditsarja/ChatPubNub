@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pubnub.example.android.datastream.pubnubdatastreams.R;
+import com.pubnub.example.android.datastream.pubnubdatastreams.util.LoadImage;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -100,45 +101,40 @@ public class AdapterPerson extends ArrayAdapter<Person> {
         final ViewHolder holder;
         float scale = activity.getBaseContext().getResources().getDisplayMetrics().density;
         //10 dp in pixels
-        int dpAsPixels = (int) (10*scale + 0.5f);
-        int padingleft = (int) (25*scale + 0.5f);
+        int dpAsPixels = (int) (10 * scale + 0.5f);
+        int padingleft = (int) (25 * scale + 0.5f);
 
         Person person = getItem(position);
         try {
 //            if (convertView == null) {
-                vi = inflater.inflate(R.layout.chat_layout, null);
-                holder = new ViewHolder();
+            vi = inflater.inflate(R.layout.chat_layout, null);
+            holder = new ViewHolder();
 
-                holder.display_image = (ImageView) vi.findViewById(R.id.display_image);
-                holder.display_name = (TextView) vi.findViewById(R.id.display_name);
-                holder.date_stamp = (TextView) vi.findViewById(R.id.date);
-                holder.last_message = (TextView) vi.findViewById(R.id.last_message);
-                holder.number_of_new_messages = (TextView) vi.findViewById(R.id.number_of_new_messages);
-                holder.seen = (ImageView) vi.findViewById(R.id.seen);
+            holder.display_image = (ImageView) vi.findViewById(R.id.display_image);
+            holder.display_name = (TextView) vi.findViewById(R.id.display_name);
+            holder.date_stamp = (TextView) vi.findViewById(R.id.date);
+            holder.last_message = (TextView) vi.findViewById(R.id.last_message);
+            holder.number_of_new_messages = (TextView) vi.findViewById(R.id.number_of_new_messages);
+            holder.seen = (ImageView) vi.findViewById(R.id.seen);
 
 
-                vi.setTag(holder);
+            vi.setTag(holder);
 //            } else {
 //                holder = (ViewHolder) vi.getTag();
 //            }
-
-            Picasso.with(getContext())
-                    .load(person.image)
-                    .resize(150, 150)
-                    .transform(new CircleTransform())
-                    .into(holder.display_image);
+            LoadImage.loadImageProfile(person.image,holder.display_image,getContext());
             holder.display_name.setText(person.name);
             holder.date_stamp.setText(person.getDateStamp());
             holder.last_message.setText(person.lastMessage);
             holder.number_of_new_messages.setText("" + person.numberOfnewMessage);
             if (person.newMessage) {
-                person.seen=false;
+                person.seen = false;
                 holder.last_message.setTypeface(holder.last_message.getTypeface(), Typeface.BOLD);
                 holder.date_stamp.setTypeface(holder.date_stamp.getTypeface(), Typeface.BOLD);
                 holder.number_of_new_messages.setVisibility(View.VISIBLE);
             }
 
-            if(person.seen) {
+            if (person.seen) {
                 holder.seen.setVisibility(View.VISIBLE);
                 holder.last_message.setPadding(padingleft, 0, dpAsPixels, dpAsPixels);
             }

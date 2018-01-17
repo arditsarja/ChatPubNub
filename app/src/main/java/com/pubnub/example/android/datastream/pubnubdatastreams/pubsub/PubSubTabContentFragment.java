@@ -1,11 +1,7 @@
 package com.pubnub.example.android.datastream.pubnubdatastreams.pubsub;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.common.collect.ImmutableMap;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.endpoints.History;
@@ -28,6 +23,7 @@ import com.pubnub.example.android.datastream.pubnubdatastreams.R;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.CameraPhoto;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.DateTimeUtil;
 import com.pubnub.example.android.datastream.pubnubdatastreams.util.JsonUtil;
+import com.pubnub.example.android.datastream.pubnubdatastreams.util.LoadImage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -69,11 +65,8 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.circleImage);
         TextView textView = findViewById(R.id.contactName);
         textView.setText(person.name);
-        Picasso.with(getApplicationContext())
-                .load(person.image)
-                .resize(100, 100)
-                .transform(new CircleTransform())
-                .into(imageView);
+        LoadImage.loadImageProfile(person.image,imageView,getApplicationContext());
+
 //        getHistory();
 
     }
@@ -83,7 +76,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
         if (start != 0)
             history.start(start);
         history.channel(person.channel)
-                .count(GET_HISTORY_DATA*2)
+                .count(GET_HISTORY_DATA * 2)
                 .includeTimetoken(true)
                 .async(new PNCallback<PNHistoryResult>() {
                     @Override
@@ -104,11 +97,11 @@ public class PubSubTabContentFragment extends AppCompatActivity {
                                     start = result.getMessages().get(i).getTimetoken();
                             }
 
-                        }}
+                        }
+                    }
                 });
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
 
     @Override
@@ -132,15 +125,15 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     private void sendMessage(ArrayList<String> data) {
         final EditText mMessage = (EditText) this.findViewById(R.id.new_message);
-        Map<String, String> message =new HashMap<String,String>();
-        message.put("id","id");
-        message.put("uniqueId","uniqueId");
-        message.put("message",data!=null?data.get(1):mMessage.getText().toString());
-        message.put("messageType",data!=null?data.get(0):"string");
-        message.put("sender",mUsername);
-        message.put("channel",person.channel);
-        message.put("sendDate",DateTimeUtil.getTimeStampUtc());
-        message.put("receiveDate","receiveDate");
+        Map<String, String> message = new HashMap<String, String>();
+        message.put("id", "id");
+        message.put("uniqueId", "uniqueId");
+        message.put("message", data != null ? data.get(1) : mMessage.getText().toString());
+        message.put("messageType", data != null ? data.get(0) : "string");
+        message.put("sender", mUsername);
+        message.put("channel", person.channel);
+        message.put("sendDate", DateTimeUtil.getTimeStampUtc());
+        message.put("receiveDate", "receiveDate");
 //        MainActivity.this.mPubnub_DataStream.publish().channel(Constants.CHANNEL_NAME).message(message).async(
         mPubnub_DataStream.publish().channel(person.channel).message(message).async(
                 new PNCallback<PNPublishResult>() {
@@ -163,7 +156,7 @@ public class PubSubTabContentFragment extends AppCompatActivity {
 
     public void chatList(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        PostVariables.person=null;
+        PostVariables.person = null;
         startActivity(intent);
     }
 //    @Override

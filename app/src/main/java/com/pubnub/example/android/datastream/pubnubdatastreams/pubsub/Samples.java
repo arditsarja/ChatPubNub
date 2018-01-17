@@ -58,8 +58,8 @@ public class Samples {
         String[] Goni = {"Goni", ImageProfile.URLS[2]};
         String[] Mira = {"Mira", ImageProfile.URLS[3]};
         String[] Tani = {"Tani", ImageProfile.URLS[4]};
-        String[] Laert = {"Laert", ImageProfile.URLS[5]};
-        String[] Endri = {"Laert", ImageProfile.URLS[6]};
+        String[] Laert = {"Laert", ""};
+        String[] Endri = {"Endri", null};
         myListItems.put("0xAAAAAAAA", new Person(Beni[0], Beni[1], "0xAAAAAAAA"));
         myListItems.put("0xAAAAAAAB", new Person(Mira[0], Mira[1], "0xAAAAAAAB"));
         myListItems.put("0xAAAAAAAC", new Person(Tani[0], Tani[1], "0xAAAAAAAC"));
