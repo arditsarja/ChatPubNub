@@ -122,7 +122,7 @@ public class AdapterPerson extends ArrayAdapter<Person> {
 //            } else {
 //                holder = (ViewHolder) vi.getTag();
 //            }
-            LoadImage.loadImageProfile(person.image,holder.display_image,getContext());
+            LoadImage.loadImageProfile(person.image,150,holder.display_image,getContext());
             holder.display_name.setText(person.name);
             holder.date_stamp.setText(person.getDateStamp());
             holder.last_message.setText(person.lastMessage);
