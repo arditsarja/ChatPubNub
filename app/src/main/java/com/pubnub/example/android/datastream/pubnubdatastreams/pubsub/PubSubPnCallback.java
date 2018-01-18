@@ -44,11 +44,18 @@ public class PubSubPnCallback extends SubscribeCallback {
             if (!PostVariables.lastMessage.equals("" + JsonUtil.asJson(message))) {
                 PostVariables.lastMessage = "" + JsonUtil.asJson(message);
                 boolean newMessage = false;
-                if (!MainActivity.mUsername.equals(dsMsg.getSender()) &&!dsMsg.getLastSeen().equals(dsMsg.getUniqueId()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
+                boolean seen = false;
+                if (!MainActivity.mUsername.equals(dsMsg.getSender()) && !dsMsg.getLastSeen().equals(dsMsg.getUniqueId()) && (PostVariables.person == null || !PostVariables.person.channel.equals(dsMsg.getChannel())))
                     newMessage = true;
+                if ((dsMsg.getLastSeen() != null && dsMsg.getLastSeen().equals(dsMsg.getUniqueId())) && dsMsg.getSender().equals(PostVariables.mUsername))
+                    seen = true;
                 try {
-                    Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setlastMessage(dsMsg.getMessageFromType(), newMessage);
-                    Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel()).setDateStamp(dsMsg.getDatestamp());
+                    dsMsg.setChannel();
+                    Person.alldata.get(MainActivity.mUsername)//get the list of conversation of the user
+                            .get(dsMsg.getChannel())// get the person data of the message received
+                            // update dhe data of that person witch the message came to fill the chat layout with new data
+                            .fillFieldWithData(dsMsg.getMessageFromType(), newMessage, seen, dsMsg.getDatestamp());
+                    // get the data from the conversation of the user and put in adapter person
                     Person person = Person.alldata.get(MainActivity.mUsername).get(dsMsg.getChannel());
                     MainActivity.adbPerson.add(person);
                 } catch (Exception e) {

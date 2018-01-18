@@ -38,6 +38,12 @@ public class Person {
         this.dateStamp = dateStamp;
     }
 
+    public void fillFieldWithData(String messageFromType, boolean newMessage,boolean seen,String dateStamp) {
+        setlastMessage(messageFromType,newMessage);
+        setSeen(seen);
+        setDateStamp(dateStamp);
+    }
+
     public void setlastMessage(String messageFromType, boolean newMessage) {
         this.newMessage = newMessage;
         if (newMessage) {
