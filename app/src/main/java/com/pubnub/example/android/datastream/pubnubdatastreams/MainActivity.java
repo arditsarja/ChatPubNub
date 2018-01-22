@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void disconnectAndCleanup() {
-        getSharedPreferences(Constants.DATASTREAM_PREFS, MODE_PRIVATE).edit().clear().commit();
+
 
         if (this.mPubnub_DataStream != null) {
             this.mPubnub_DataStream.unsubscribe().channels(PUBSUB_CHANNEL).execute();
@@ -415,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
             this.mScheduleTaskExecutor.shutdownNow();
             this.mScheduleTaskExecutor = null;
         }
+
     }
 
     @Override
@@ -444,7 +445,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout() {
         disconnectAndCleanup();
-
+        mSharedPrefs.edit().remove(Constants.DATASTREAM_UUID).apply();
+        mSharedPrefs = null;
         Intent toLogin = new Intent(this, LoginActivity.class);
         startActivity(toLogin);
     }
@@ -452,6 +454,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
     @Override

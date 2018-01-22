@@ -38,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     private static boolean isValid(String username) {
         return username.matches("^[a-zA-Z0-9_]+$");
     }

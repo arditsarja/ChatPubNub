@@ -30,6 +30,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_test"
             android:hint="@string/username"
+            android:inputType="textVisiblePassword"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             custom:layout_marginTopPercent="5%"
